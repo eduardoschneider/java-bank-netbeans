@@ -51,8 +51,11 @@ public class Banco {
                     break;
                     case 8:System.out.println("Voltar");
                     break;
-                    default:System.out.println("Digite uma opção válida.");
-                }   break;
+                    
+                default:System.out.println("Digite uma opção válida.");
+                break;
+                }
+            break;
             case 2:
                 clearScreen();
                 showNormalMenu();
@@ -75,11 +78,15 @@ public class Banco {
                     case 8:System.out.println("Transferência");
                     break;
                     case 9:System.out.println("Voltar");
-                }   break;
+                   break;
             default:
                 System.out.println("Digite uma opção válida!");
                 break;
-        }
+            }
+            break;
+            default:System.out.println("Digite uma opção válida!");
+            break;
+        } 
     }
     
     public static void clearScreen(){
