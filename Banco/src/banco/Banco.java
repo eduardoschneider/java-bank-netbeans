@@ -19,74 +19,7 @@ public class Banco {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        clearScreen();
-        System.out.println("------------------------------------------------------");
-        System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
-        System.out.println("1- Administrador");
-        System.out.println("2- Usuário Normal\n");    
-        System.out.println("------------------------------------------------------");
-
-        Scanner leitor = new Scanner(System.in);
-        int opcao = leitor.nextInt();
-
-        switch (opcao) {
-            case 1:
-                clearScreen();
-                showAdminMenu();
-                opcao = leitor.nextInt();
-                switch (opcao){
-                    case 1:System.out.println("Cadastrar Clientes");
-                    break;
-                    case 2:System.out.println("Cadastrar Contas");
-                    break;
-                    case 3:System.out.println("Investimentos");
-                    break;
-                    case 4:System.out.println("Pesquisar Investimentos");
-                    break;
-                    case 5:System.out.println("Pesquisar Clientes");
-                    break;
-                    case 6:System.out.println("Pesquisar Contas");
-                    break;
-                    case 7:System.out.println("Avançar o dia");
-                    break;
-                    case 8:System.out.println("Voltar");
-                    break;
-                    
-                default:System.out.println("Digite uma opção válida.");
-                break;
-                }
-            break;
-            case 2:
-                clearScreen();
-                showNormalMenu();
-                opcao = leitor.nextInt();
-                switch (opcao){
-                    case 1:System.out.println("Depósito");
-                    break;
-                    case 2:System.out.println("Pagamento");
-                    break;
-                    case 3:System.out.println("Extrato");
-                    break;
-                    case 4:System.out.println("Saque");
-                    break;
-                    case 5:System.out.println("CDB");
-                    break;
-                    case 6:System.out.println("Saldo");
-                    break;
-                    case 7:System.out.println("Investimentos");
-                    break;
-                    case 8:System.out.println("Transferência");
-                    break;
-                    case 9:System.out.println("Voltar");
-                   break;
-            default:
-                System.out.println("Digite uma opção válida!");
-                break;
-            }
-            break;
-            default:System.out.println("Digite uma opção válida!");
-            break;
-        } 
+        metodoPrincipal();
     }
     
     public static void clearScreen(){
@@ -107,6 +40,7 @@ public class Banco {
         System.out.println("6- Pesquisar Contas");
         System.out.println("7- Avançar o dia");
         System.out.println("8- Voltar");
+        System.out.println("9- Sair");
         System.out.println("------------------------------------------------------");
     }
     
@@ -122,6 +56,82 @@ public class Banco {
         System.out.println("7- Investimento");
         System.out.println("8- Transferência");
         System.out.println("9- Voltar");
+        System.out.println("10- Sair");
         System.out.println("------------------------------------------------------");
+    }
+
+    private static void metodoPrincipal() {
+        clearScreen();
+        System.out.println("------------------------------------------------------");
+        System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
+        System.out.println("1- Administrador");
+        System.out.println("2- Usuário Normal\n");    
+        System.out.println("------------------------------------------------------");
+
+        Scanner leitor = new Scanner(System.in);
+        int opcao = leitor.nextInt();
+
+        switch (opcao) {
+            case 1:
+                clearScreen();
+                showAdminMenu();
+                opcao = leitor.nextInt();
+                switch (opcao){
+                    case 1:
+                    break;
+                    case 2:
+                    break;
+                    case 3:
+                    break;
+                    case 4:
+                    break;
+                    case 5:
+                    break;
+                    case 6:
+                    break;
+                    case 7:
+                    break;
+                    case 8:
+                    break;
+                    case 9:
+                    break;
+                    
+                default:System.out.println("Digite uma opção válida.");
+                break;
+                }
+            break;
+            case 2:
+                clearScreen();
+                showNormalMenu();
+                opcao = leitor.nextInt();
+                switch (opcao){
+                    case 1:
+                    break;
+                    case 2:
+                    break;
+                    case 3:
+                    break;
+                    case 4:
+                    break;
+                    case 5:
+                    break;
+                    case 6:
+                    break;
+                    case 7:
+                    break;
+                    case 8:
+                    break;
+                    case 9:
+                    break;
+                    case 10:
+                    break;
+            default:
+                System.out.println("Digite uma opção válida!");
+                break;
+            }
+            break;
+            default:System.out.println("Digite uma opção válida!");
+            break;
+        } 
     }
 }
