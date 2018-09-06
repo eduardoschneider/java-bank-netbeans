@@ -14,7 +14,6 @@ public class Conta {
     private String nome;
     private String banco;
     private double saldo;
-    private Extrato extrato[];
 
     
     public Conta(){
@@ -22,15 +21,6 @@ public class Conta {
         this.nome = "Eduardo Schneider";
         this.banco = "Banco do Brasil 001";
         this.saldo = 520.0;
-        this.extrato = new Extrato[30];
-    }
-    
-    public Extrato[] getExtrato() {
-        return extrato;
-    }
-
-    public void setExtrato(Extrato[] extrato) {
-        this.extrato = extrato;
     }
 
     public String getCodigoConta() {

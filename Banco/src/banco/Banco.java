@@ -101,6 +101,7 @@ public class Banco {
                 }
             break;
             case 2:
+                Conta usuario = new Conta();
                 clearScreen();
                 showNormalMenu();
                 opcao = leitor.nextInt();

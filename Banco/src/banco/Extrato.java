@@ -15,15 +15,14 @@ public class Extrato {
     private Date data;
     private double valorMexido;
     private boolean tipoMovimento; //false = saida true = entrada
-    private String codigoConta;
-    private String nome;
+    private Conta conta;
 
-    public String getNome() {
-        return nome;
+    public Conta getConta() {
+        return conta;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 
     public Date getData() {
@@ -48,13 +47,5 @@ public class Extrato {
 
     public void setTipoMovimento(boolean tipoMovimento) {
         this.tipoMovimento = tipoMovimento;
-    }
-
-    public String getCodigoConta() {
-        return codigoConta;
-    }
-
-    public void setCodigoConta(String codigoConta) {
-        this.codigoConta = codigoConta;
     }
 }
