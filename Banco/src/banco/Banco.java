@@ -21,15 +21,14 @@ public class Banco {
     public static void main(String[] args) throws IOException {
         metodoPrincipal();
     }
-    
-    public static void clearScreen(){
-        for (int i = 0; i < 30; i++)
-        {
+
+    public static void clearScreen() {
+        for (int i = 0; i < 30; i++) {
             System.out.println(" ");
         }
     }
-    
-    public static void showAdminMenu(){
+
+    public static void showAdminMenu() {
         System.out.println("------------------------------------------------------");
         System.out.println("Selecione uma das opções administrativas:");
         System.out.println("1- Cadastrar Clientes");
@@ -43,8 +42,8 @@ public class Banco {
         System.out.println("9- Sair");
         System.out.println("------------------------------------------------------");
     }
-    
-    public static void showNormalMenu(){
+
+    public static void showNormalMenu() {
         System.out.println("------------------------------------------------------");
         System.out.println("Selecione uma das opções:");
         System.out.println("1- Depósito");
@@ -59,15 +58,28 @@ public class Banco {
         System.out.println("10- Sair");
         System.out.println("------------------------------------------------------");
     }
-
-    private static void metodoPrincipal() {
-        clearScreen();
+    
+    private static void perguntaTipo(){
         System.out.println("------------------------------------------------------");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
         System.out.println("1- Administrador");
-        System.out.println("2- Usuário Normal\n");    
+        System.out.println("2- Usuário Normal\n");
         System.out.println("------------------------------------------------------");
+        
+    }
 
+    private static void metodoPrincipal() {
+        clearScreen();
+        
+        Conta todas[] = new Conta[10];
+        for (int i = 0; i < 10; i++){
+            todas[i] = new Conta(i);
+        }
+        
+        Extrato registro[] = new Extrato[30];
+        
+        perguntaTipo();
+        
         Scanner leitor = new Scanner(System.in);
         int opcao = leitor.nextInt();
 
@@ -76,63 +88,78 @@ public class Banco {
                 clearScreen();
                 showAdminMenu();
                 opcao = leitor.nextInt();
-                switch (opcao){
+                switch (opcao) {
                     case 1:
-                    break;
+                        break;
                     case 2:
-                    break;
+                        break;
                     case 3:
-                    break;
+                        break;
                     case 4:
-                    break;
+                        break;
                     case 5:
-                    break;
+                        break;
                     case 6:
-                    break;
+                        break;
                     case 7:
-                    break;
+                        break;
                     case 8:
-                    break;
+                        break;
                     case 9:
-                    break;
-                    
-                default:System.out.println("Digite uma opção válida.");
-                break;
+                        break;
+                    default:
+                        System.out.println("Digite uma opção válida.");
+                        break;
                 }
-            break;
+                break;
             case 2:
-                Conta usuario = new Conta();
                 clearScreen();
-                showNormalMenu();
-                opcao = leitor.nextInt();
-                switch (opcao){
-                    case 1:
-                    break;
-                    case 2:
-                    break;
-                    case 3:
-                    break;
-                    case 4:
-                    break;
-                    case 5:
-                    break;
-                    case 6:
-                    break;
-                    case 7:
-                    break;
-                    case 8:
-                    break;
-                    case 9:
-                    break;
-                    case 10:
-                    break;
+                if (perguntaUsuario(todas)) {
+                    clearScreen();
+                    showNormalMenu();
+                    opcao = leitor.nextInt();
+                    switch (opcao) {
+                        case 1:
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                        case 8:
+                            break;
+                        case 9:
+                            break;
+                        case 10:
+                            break;
+                        default:
+                            System.out.println("Digite uma opção válida!");
+                            break;
+                    }
+                }
+                break;
             default:
                 System.out.println("Digite uma opção válida!");
                 break;
-            }
-            break;
-            default:System.out.println("Digite uma opção válida!");
-            break;
-        } 
+        }
+    }
+
+    public static boolean perguntaUsuario(Conta[] todas) {
+        System.out.println(todas[0].getNome());
+        System.out.println("Digite sua conta\n");
+        Scanner leitor = new Scanner(System.in);
+        String conta = leitor.next();
+        System.out.println("Digite sua senha\n");
+        String senha = leitor.next();
+        System.out.println("\n\n\n");
+        System.out.println(conta + "  " + senha);
+        return false;
     }
 }
