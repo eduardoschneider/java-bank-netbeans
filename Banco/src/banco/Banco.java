@@ -69,6 +69,7 @@ public class Banco {
     }
 
     private static void metodoPrincipal() {
+        
         clearScreen();
         
         Conta todas[] = null;

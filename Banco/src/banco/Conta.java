@@ -15,10 +15,10 @@ public class Conta {
     private double saldo;
 
     
-    public Conta(){
-        this.codigoConta = "0000-00";
-        this.cliente = new Cliente();
-        this.saldo = 500.0;
+    public Conta(String codigoConta, Cliente cliente, double saldo){
+        this.codigoConta = codigoConta;
+        this.cliente = cliente;
+        this.saldo = saldo;
     }
 //        switch(tipo){
 //            case 1:

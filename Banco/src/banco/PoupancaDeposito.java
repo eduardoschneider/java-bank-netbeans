@@ -20,6 +20,16 @@ public class PoupancaDeposito {
     private Date aniversario;
     private boolean status; //ativo ou inativo
 
+    public PoupancaDeposito(int idPoupancaDeposito, Poupanca contapoupanca, double saldo, Date dataInicio, Date datatermino, Date aniversario, boolean status) {
+        this.idPoupancaDeposito = idPoupancaDeposito;
+        this.contapoupanca = contapoupanca;
+        this.saldo = saldo;
+        this.dataInicio = dataInicio;
+        this.datatermino = datatermino;
+        this.aniversario = aniversario;
+        this.status = status;
+    }
+    
     public int getIdPoupancaDeposito() {
         return idPoupancaDeposito;
     }

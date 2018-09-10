@@ -19,7 +19,17 @@ public class CDB_Extrato {
     private Date datainicio;
     private Date datatermino;
     private boolean status;
-
+    
+    public CDB_Extrato(int id, CDB cdb, Cliente cliente, double saldo, Date datainicio, Date datatermino, boolean status) {
+        this.id = id;
+        this.cdb = cdb;
+        this.cliente = cliente;
+        this.saldo = saldo;
+        this.datainicio = datainicio;
+        this.datatermino = datatermino;
+        this.status = status;
+    }
+    
     public int getId() {
         return id;
     }

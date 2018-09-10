@@ -14,6 +14,12 @@ public class Poupanca {
     private Cliente cliente;
     private double saldo;
 
+    public Poupanca(int idPoupanca, Cliente cliente, double saldo) {
+        this.idPoupanca = idPoupanca;
+        this.cliente = cliente;
+        this.saldo = saldo;
+    }
+
     public int getIdPoupanca() {
         return idPoupanca;
     }

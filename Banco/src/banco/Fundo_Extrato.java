@@ -12,12 +12,22 @@ import java.util.Date;
  * @author eduardo.schneider
  */
 public class Fundo_Extrato {
-   private int id;
-   private Fundo fundo;
-   private Cliente cliente;
-   private double saldo;
-   private Date datainicio;
-   private boolean status;
+
+    private int id;
+    private Fundo fundo;
+    private Cliente cliente;
+    private double saldo;
+    private Date datainicio;
+    private boolean status;
+
+    public Fundo_Extrato(int id, Fundo fundo, Cliente cliente, double saldo, Date datainicio, boolean status) {
+        this.id = id;
+        this.fundo = fundo;
+        this.cliente = cliente;
+        this.saldo = saldo;
+        this.datainicio = datainicio;
+        this.status = status;
+    }
 
     public int getId() {
         return id;

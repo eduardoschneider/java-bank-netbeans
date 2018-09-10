@@ -13,6 +13,12 @@ public class CDB {
     private int id;
     private String nome;
     private double saldo;
+
+    public CDB(int id, String nome, double saldo) {
+        this.id = id;
+        this.nome = nome;
+        this.saldo = saldo;
+    }
     
     public int getId() {
         return id;

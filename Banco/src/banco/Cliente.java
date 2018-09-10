@@ -17,13 +17,13 @@ public class Cliente {
     private String cpfCliente;
     private Date dataNasc;
 
-    public Cliente(){
-        this.idCliente = 0;
-        this.nomeCliente = "";
-        this.cpfCliente = "";
-        this.dataNasc = new Date();
+    public Cliente(int idCliente, String nomeCliente, String cpfCliente, Date dataNasc) {
+        this.idCliente = idCliente;
+        this.nomeCliente = nomeCliente;
+        this.cpfCliente = cpfCliente;
+        this.dataNasc = dataNasc;
     }
-    
+
     public int getIdCliente() {
         return idCliente;
     }

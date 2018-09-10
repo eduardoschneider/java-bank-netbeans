@@ -18,9 +18,9 @@ public class Extrato {
     private Conta conta;
 
     public Extrato(Date data, double valorMexido, boolean tipoMovimento, Conta conta){
-        this.data = new Date();
-        this.valorMexido = 0.00;
-        this.tipoMovimento = false;
+        this.data = data;
+        this.valorMexido = valorMexido;
+        this.tipoMovimento = tipoMovimento;
         this.conta = conta;
         
     }
