@@ -6,6 +6,9 @@
 package banco;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -69,11 +72,28 @@ public class Banco {
     }
 
     private static void metodoPrincipal() {
+        Cliente cliente1 = new Cliente(0,"Eduardo Schneider111","464.833.218-05", new Date());
+        Cliente cliente2 = new Cliente(1,"Eduardo Schneider222","464.833.218-05", new Date());
+        Cliente cliente3 = new Cliente(2,"Eduardo Schneider333","464.833.218-05", new Date());
+        Cliente cliente4 = new Cliente(3,"Eduardo Schneider444","464.833.218-05", new Date());
+        Cliente cliente5 = new Cliente(4,"Eduardo Schneider555","464.833.218-05", new Date());
         
+        Conta conta1 = new Conta("000-00", cliente1, 500.0);
+        Conta conta2 = new Conta("000-01", cliente2, 200.0);
+        Conta conta3 = new Conta("000-02", cliente3, 300.0);
+        Conta conta4 = new Conta("000-03", cliente4, 400.0);
+        Conta conta5 = new Conta("000-04", cliente5, 100.0);
+        
+        Poupanca poupanca1 = new Poupanca(0, cliente1 , 0.0);
+        Poupanca poupanca2 = new Poupanca(1, cliente2 , 0.0);
+        Poupanca poupanca3 = new Poupanca(2, cliente3 , 0.0);
+        Poupanca poupanca4 = new Poupanca(3, cliente4 , 0.0);
+        Poupanca poupanca5 = new Poupanca(4, cliente5 , 0.0);
+        
+        List<Extrato> extratos = new ArrayList(); //lista de extratos
+     
         clearScreen();
-        
         Conta todas[] = null;
-        
         Extrato registro[] = new Extrato[30];
         
         perguntaTipo();
