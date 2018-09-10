@@ -9,16 +9,17 @@ package banco;
  *
  * @author eduardo.schneider
  */
-public class Conta {
-    private String codigoConta;
+public class Poupanca {
+    private int idPoupanca;
     private Cliente cliente;
     private double saldo;
 
-    
-    public Conta(){
-        this.codigoConta = "0000-00";
-        this.cliente = new Cliente();
-        this.saldo = 500.0;
+    public int getIdPoupanca() {
+        return idPoupanca;
+    }
+
+    public void setIdPoupanca(int idPoupanca) {
+        this.idPoupanca = idPoupanca;
     }
 
     public Cliente getCliente() {
@@ -27,14 +28,6 @@ public class Conta {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-
-    public String getCodigoConta() {
-        return codigoConta;
-    }
-
-    public void setCodigoConta(String codigoConta) {
-        this.codigoConta = codigoConta;
     }
 
     public double getSaldo() {
