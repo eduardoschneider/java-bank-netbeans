@@ -62,13 +62,17 @@ public class Banco {
         System.out.println("------------------------------------------------------");
     }
     
-    private static void perguntaTipo(){
+    private static int perguntaTipo(){
         System.out.println("------------------------------------------------------");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
         System.out.println("1- Administrador");
         System.out.println("2- Usuário Normal\n");
         System.out.println("------------------------------------------------------");
         
+        Scanner leitor = new Scanner(System.in);
+        int opcao = leitor.nextInt();
+        
+        return opcao;
     }
 
     private static void metodoPrincipal() {
@@ -77,30 +81,44 @@ public class Banco {
         Cliente cliente3 = new Cliente(2,"Eduardo Schneider333","464.833.218-05", new Date());
         Cliente cliente4 = new Cliente(3,"Eduardo Schneider444","464.833.218-05", new Date());
         Cliente cliente5 = new Cliente(4,"Eduardo Schneider555","464.833.218-05", new Date());
+        List<Cliente> clientes = new ArrayList();
+        clientes.add(cliente1);
+        clientes.add(cliente2);
+        clientes.add(cliente3);
+        clientes.add(cliente4);
+        clientes.add(cliente5);
         
         Conta conta1 = new Conta("000-00", cliente1, 500.0);
         Conta conta2 = new Conta("000-01", cliente2, 200.0);
         Conta conta3 = new Conta("000-02", cliente3, 300.0);
         Conta conta4 = new Conta("000-03", cliente4, 400.0);
         Conta conta5 = new Conta("000-04", cliente5, 100.0);
+        List<Conta> contas = new ArrayList();
+        contas.add(conta1);
+        contas.add(conta2);
+        contas.add(conta3);
+        contas.add(conta4);
+        contas.add(conta5);
         
         Poupanca poupanca1 = new Poupanca(0, cliente1 , 0.0);
         Poupanca poupanca2 = new Poupanca(1, cliente2 , 0.0);
         Poupanca poupanca3 = new Poupanca(2, cliente3 , 0.0);
         Poupanca poupanca4 = new Poupanca(3, cliente4 , 0.0);
         Poupanca poupanca5 = new Poupanca(4, cliente5 , 0.0);
+        List<Poupanca> poupancas = new ArrayList();
+        poupancas.add(poupanca1);
+        poupancas.add(poupanca2);
+        poupancas.add(poupanca3);
+        poupancas.add(poupanca4);
+        poupancas.add(poupanca5);
         
         List<Extrato> extratos = new ArrayList(); //lista de extratos
-     
+       
         clearScreen();
-        Conta todas[] = null;
-        Extrato registro[] = new Extrato[30];
         
-        perguntaTipo();
-        
+        int opcao = perguntaTipo();
         Scanner leitor = new Scanner(System.in);
-        int opcao = leitor.nextInt();
-
+        
         switch (opcao) {
             case 1:
                 clearScreen();
@@ -132,7 +150,7 @@ public class Banco {
                 break;
             case 2:
                 clearScreen();
-                if (perguntaUsuario(todas)) {
+                if (perguntaUsuario(contas)) {
                     clearScreen();
                     showNormalMenu();
                     opcao = leitor.nextInt();
@@ -169,14 +187,17 @@ public class Banco {
         }
     }
 
-    public static boolean perguntaUsuario(Conta[] todas) {
+    public static boolean perguntaUsuario(List<Conta> todas) {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
-        System.out.println("Digite sua senha\n");
-        String senha = leitor.next();
-        System.out.println("\n\n\n");
-        System.out.println(conta + "  " + senha);
+        clearScreen();
+        for(Conta cadaConta : todas){
+            if (cadaConta.getCodigoConta().equals(conta)){
+                System.out.println("FOI");
+                return true;
+            }
+        }
         return false;
     }
 }
