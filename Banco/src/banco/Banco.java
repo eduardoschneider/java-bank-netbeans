@@ -16,7 +16,8 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Banco {
-
+    public static int idCliente = 5;
+    public static int idConta = 5;
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
@@ -126,8 +127,10 @@ public class Banco {
                 opcao = leitor.nextInt();
                 switch (opcao) {
                     case 1:
+                        clientes.add(cadastrarCliente());
                         break;
                     case 2:
+                        contas.add(cadastrarConta(clientes));
                         break;
                     case 3:
                         break;
@@ -199,5 +202,46 @@ public class Banco {
             }
         }
         return false;
+    }
+  
+    public static Cliente cadastrarCliente(){
+        System.out.println("Digite o nome do cliente\n");
+        Scanner leitor = new Scanner(System.in);
+        String nome = leitor.next();
+        
+        System.out.println("Digite o CPF do cliente\n");
+        String cpf = leitor.next();
+        
+        Cliente cliente = new Cliente(idCliente, nome, cpf, new Date());
+        idCliente++;
+        clearScreen();
+        
+        return cliente;
+    }
+    
+    public static Conta cadastrarConta(List<Cliente> todos){
+        System.out.println("Digite o CPF\n");
+        Scanner leitor = new Scanner(System.in);
+        String cpf = leitor.next();
+        
+        Cliente atual = null; // só p inicializar
+        Conta conta = null; // só p inicializar
+        
+        for(Cliente cadaCliente : todos){
+           if (cadaCliente.getCpfCliente().equals(cpf)){
+               atual = cadaCliente;
+           }
+        }
+        if (atual != null) {
+            conta = new Conta("000-0" + idConta, atual, 0.0);
+            idConta++;
+        } else {
+            
+            clearScreen();
+            return null;
+        }
+        
+        clearScreen();
+        return conta;
     }
 }
