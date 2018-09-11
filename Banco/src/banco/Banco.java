@@ -16,9 +16,9 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Banco {
-    public static int idCliente = 5;
-    public static int idConta = 5;
-    public static Conta contaAtual = null;
+    protected static int idCliente = 5;
+    protected static int idConta = 5;
+    protected static Conta contaAtual = null;
     
     /**
      * @param args the command line arguments
