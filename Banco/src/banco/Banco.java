@@ -125,7 +125,7 @@ public class Banco {
         switch (opcao) {
             case 1:
                 clearScreen();
-                while (opcao != 0){
+                while (opcao != 9){
                 showAdminMenu();
                 opcao = leitor.nextInt();
                     switch (opcao) {
@@ -148,6 +148,7 @@ public class Banco {
                         case 8:
                             break;
                         case 9:
+                            System.out.println("Obrigado por utilizar o banco!");
                             break;
                         default:
                             System.out.println("Digite uma opção válida.");
@@ -159,7 +160,7 @@ public class Banco {
                 clearScreen();
                 if (perguntaUsuario(contas)) {
                     clearScreen();
-                    while (opcao != 0){
+                    while (opcao != 10){
                     showNormalMenu();
                     opcao = leitor.nextInt();
                     switch (opcao) {
@@ -182,6 +183,7 @@ public class Banco {
                         case 9:
                             break;
                         case 10:
+                            System.out.println("Obrigado por utilizar o banco!");
                             break;
                         default:
                             System.out.println("Digite uma opção válida!");
