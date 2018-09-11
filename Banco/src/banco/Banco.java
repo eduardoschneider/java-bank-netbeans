@@ -18,6 +18,8 @@ import java.util.Scanner;
 public class Banco {
     public static int idCliente = 5;
     public static int idConta = 5;
+    public static Conta contaAtual = null;
+    
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
@@ -62,7 +64,7 @@ public class Banco {
         System.out.println("10- Sair");
         System.out.println("------------------------------------------------------");
     }
-    
+
     private static int perguntaTipo(){
         System.out.println("------------------------------------------------------");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
@@ -123,38 +125,41 @@ public class Banco {
         switch (opcao) {
             case 1:
                 clearScreen();
+                while (opcao != 0){
                 showAdminMenu();
                 opcao = leitor.nextInt();
-                switch (opcao) {
-                    case 1:
-                        clientes.add(cadastrarCliente());
-                        break;
-                    case 2:
-                        contas.add(cadastrarConta(clientes));
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    case 7:
-                        break;
-                    case 8:
-                        break;
-                    case 9:
-                        break;
-                    default:
-                        System.out.println("Digite uma opção válida.");
-                        break;
+                    switch (opcao) {
+                        case 1:
+                            clientes.add(cadastrarCliente());
+                            break;
+                        case 2:
+                            contas.add(cadastrarConta(clientes));
+                            break;
+                        case 3:
+                            break;
+                        case 4:
+                            break;
+                        case 5:
+                            break;
+                        case 6:
+                            break;
+                        case 7:
+                            break;
+                        case 8:
+                            break;
+                        case 9:
+                            break;
+                        default:
+                            System.out.println("Digite uma opção válida.");
+                            break;
+                    }
                 }
                 break;
             case 2:
                 clearScreen();
                 if (perguntaUsuario(contas)) {
                     clearScreen();
+                    while (opcao != 0){
                     showNormalMenu();
                     opcao = leitor.nextInt();
                     switch (opcao) {
@@ -182,6 +187,7 @@ public class Banco {
                             System.out.println("Digite uma opção válida!");
                             break;
                     }
+                  }
                 }
                 break;
             default:
@@ -197,7 +203,7 @@ public class Banco {
         clearScreen();
         for(Conta cadaConta : todas){
             if (cadaConta.getCodigoConta().equals(conta)){
-                System.out.println("FOI");
+                contaAtual = cadaConta;
                 return true;
             }
         }
