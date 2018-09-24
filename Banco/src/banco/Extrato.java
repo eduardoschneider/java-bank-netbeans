@@ -6,6 +6,7 @@
 package banco;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -49,11 +50,38 @@ public class Extrato {
         this.valorMexido = valorMexido;
     }
 
-    public boolean isTipoMovimento() {
+    public boolean getTipoMovimento() {
         return tipoMovimento;
     }
 
     public void setTipoMovimento(boolean tipoMovimento) {
         this.tipoMovimento = tipoMovimento;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.conta);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Extrato other = (Extrato) obj;
+        if (!Objects.equals(this.conta, other.conta)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
