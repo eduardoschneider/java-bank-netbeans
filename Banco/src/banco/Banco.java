@@ -5,6 +5,8 @@
  */
 package banco;
 
+import static banco.Cliente.cadastrarCliente;
+import static banco.Conta.cadastrarConta;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +36,7 @@ public class Banco {
     }
 
     public static void clearScreen() {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 20; i++) {
             System.out.println(" ");
         }
     }
@@ -42,15 +44,22 @@ public class Banco {
     public static void showAdminMenu() {
         System.out.println("------------------------------------------------------");
         System.out.println("Selecione uma das opções administrativas:");
-        System.out.println("1- Cadastrar Clientes");
-        System.out.println("2- Cadastrar Contas");
-        System.out.println("3- Investimentos");
-        System.out.println("4- Pesquisar Investimentos");
-        System.out.println("5- Pesquisar Clientes");
-        System.out.println("6- Pesquisar Contas");
-        System.out.println("7- Avançar o dia");
-        System.out.println("8- Voltar");
-        System.out.println("9- Sair");
+        System.out.println("-----CLIENTES------");
+        System.out.println("1- Cadastrar");
+        System.out.println("2- Excluir");
+        System.out.println("3- Alterar");
+        System.out.println("4- Pesquisar");
+        System.out.println("\n");
+        System.out.println("-----CONTAS------");
+        System.out.println("5- Cadastrar");
+        System.out.println("6- Excluir");
+        System.out.println("7- Alterar");
+        System.out.println("8- Pesquisar");
+        System.out.println("\n");
+        System.out.println("9- Cadastrar Investimentos");
+        System.out.println("10- Avançar o dia");
+        System.out.println("11- Voltar");
+        System.out.println("10- Sair");
         System.out.println("------------------------------------------------------");
     }
 
@@ -87,35 +96,55 @@ public class Banco {
         populaParaTestes();
         clearScreen();
         
-        int opcao = perguntaTipo();
+        int opcao = 0;
         
         Scanner leitor = new Scanner(System.in);
+        while (opcao != 3)
+        {
+        opcao = perguntaTipo();
         switch (opcao) {
             case 1:
                 clearScreen();
-                while ((opcao != 9) && (opcao != 8)) {
+                while ((opcao != 12) && (opcao != 11)) {
                     showAdminMenu();
                     opcao = leitor.nextInt();
                     switch (opcao) {
                         case 1:
-                            clientes.add(cadastrarCliente());
+                            clientes.add(cadastrarCliente(idCliente));
+                            idCliente++;
                             break;
                         case 2:
-                            contas.add(cadastrarConta(clientes));
+                            //excluir cliente
                             break;
                         case 3:
+                            //alterar cliente
                             break;
                         case 4:
+                            //pesquisar cliente
                             break;
                         case 5:
+                            contas.add(cadastrarConta(clientes, idConta));
+                            idConta++;
                             break;
                         case 6:
+                            //excluir conta
                             break;
                         case 7:
+                            //alterar conta
                             break;
                         case 8:
+                            //pesquisar conta
                             break;
                         case 9:
+                            //cadastrar invstimentos
+                            break;
+                        case 10:
+                            //avançar o dia
+                            break;
+                        case 11:
+                            //voltar
+                            break;
+                        case 12:
                             System.out.println("Obrigado por utilizar o banco!");
                             break;
                         default:
@@ -123,12 +152,13 @@ public class Banco {
                             break;
                     }
                 }
+                clearScreen();
                 break;
             case 2:
                 clearScreen();
                 if (perguntaUsuario(contas)) {
                     clearScreen();
-                    while (opcao != 10) {
+                    while ((opcao != 10) && (opcao != 9)) {
                         showNormalMenu();
                         opcao = leitor.nextInt();
                             switch (opcao) {
@@ -147,16 +177,19 @@ public class Banco {
                                        extratos.add(saque);
                                     break;
                                 case 5:
+                                    //CDB
                                     break;
                                 case 6:
                                     contaAtual.consultarSaldo();
                                     break;
                                 case 7:
+                                    //Investimentos
                                     break;
                                 case 8:
                                     transferir();
                                     break;
                                 case 9:
+                                    //VOltar
                                     break;
                                 case 10:
                                     System.out.println("Obrigado por utilizar o banco!");
@@ -167,11 +200,13 @@ public class Banco {
                             }
                         }
                     }
+                clearScreen();
                 break;
             default:
                 System.out.println("Digite uma opção válida!");
                 break;
         }
+    }
     }
     
     private static void populaParaTestes(){
@@ -234,47 +269,6 @@ public class Banco {
         return false;
     }
 
-    public static Cliente cadastrarCliente() {
-        System.out.println("Digite o nome do cliente\n");
-        Scanner leitor = new Scanner(System.in);
-        String nome = leitor.next();
-
-        System.out.println("Digite o CPF do cliente\n");
-        String cpf = leitor.next();
-
-        Cliente cliente = new Cliente(idCliente, nome, cpf, new Date());
-        idCliente++;
-        clearScreen();
-
-        return cliente;
-    }
-
-    public static Conta cadastrarConta(List<Cliente> todos) {
-        System.out.println("Digite o CPF\n");
-        Scanner leitor = new Scanner(System.in);
-        String cpf = leitor.next();
-
-        Cliente atual = null; // só p inicializar
-        Conta conta = null; // só p inicializar
-
-        for (Cliente cadaCliente : todos) {
-            if (cadaCliente.getCpfCliente().equals(cpf)) {
-                atual = cadaCliente;
-            }
-        }
-        if (atual != null) {
-            conta = new Conta("000-0" + idConta, atual, 0.0);
-            idConta++;
-        } else {
-
-            clearScreen();
-            return null;
-        }
-
-        clearScreen();
-        return conta;
-    }
-    
     private static void depositar(){
         clearScreen();
         System.out.println("\nDigite a conta que deseja depositar:\n");

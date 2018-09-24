@@ -5,7 +5,10 @@
  */
 package banco;
 
+import static banco.Banco.clearScreen;
+import static banco.Banco.idCliente;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
@@ -55,5 +58,18 @@ public class Cliente {
     public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
+    
+    public static Cliente cadastrarCliente(int idCliente) {
+        System.out.println("Digite o nome do cliente\n");
+        Scanner leitor = new Scanner(System.in);
+        String nome = leitor.nextLine();
 
+        System.out.println("Digite o CPF do cliente\n");
+        String cpf = leitor.next();
+
+        Cliente cliente = new Cliente(idCliente, nome, cpf, new Date());
+        clearScreen();
+
+        return cliente;
+    }
 }
