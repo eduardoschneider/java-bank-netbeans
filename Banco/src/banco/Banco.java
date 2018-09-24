@@ -16,7 +16,6 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Banco {
-
     public static int idCliente = 5;
     public static int idConta = 5;
     public static Conta contaAtual = null;
@@ -25,7 +24,6 @@ public class Banco {
     public static List<Conta> contas;
     public static List<Poupanca> poupancas;
     public static List<Extrato> extratos;
-    
 
     /**
      * @param args the command line arguments
