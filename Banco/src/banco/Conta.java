@@ -7,7 +7,6 @@ package banco;
 
 import static banco.Banco.clearScreen;
 import static banco.Banco.contaAtual;
-import static banco.Banco.idConta;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -18,15 +17,18 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Conta {
+
     private String codigoConta;
     private Cliente cliente;
     private double saldo;
 
-    
-    public Conta(String codigoConta, Cliente cliente, double saldo){
+    public Conta(String codigoConta, Cliente cliente, double saldo) {
         this.codigoConta = codigoConta;
         this.cliente = cliente;
         this.saldo = saldo;
+    }
+
+    public Conta() {
     }
 
     public Cliente getCliente() {
@@ -51,7 +53,7 @@ public class Conta {
 
     public void setSaldo(double saldo) {
         this.saldo = saldo;
-    }    
+    }
 
     @Override
     public int hashCode() {
@@ -77,28 +79,28 @@ public class Conta {
         }
         return true;
     }
-    
-     public Extrato sacar(Conta contaAtual){
+
+    public Extrato sacar(Conta contaAtual) {
         System.out.println("Digite o valor que deseja sacar:\n");
         Scanner leitor = new Scanner(System.in);
         Double valor = Double.parseDouble(leitor.next());
-        
+
         if (contaAtual.getSaldo() < valor) {
             System.out.println("Saldo insuficiente para realizar o saque.\n");
             return null;
         }
-        
+
         contaAtual.setSaldo(contaAtual.getSaldo() - valor);
         Extrato extrato = new Extrato(new Date(), valor, false, contaAtual);
-        
+
         return extrato;
-     }
-     
-     public void consultarSaldo(){
-         System.out.println("O seu saldo é de: R$" + this.getSaldo());
-     }
-     
-     public static Conta cadastrarConta(List<Cliente> todos, int idConta) {
+    }
+
+    public void consultarSaldo() {
+        System.out.println("O seu saldo é de: R$" + this.getSaldo());
+    }
+
+    public static Conta cadastrarConta(List<Cliente> todos, int idConta) {
         System.out.println("Digite o CPF\n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
@@ -124,5 +126,86 @@ public class Conta {
         return conta;
     }
 
-    
+    public boolean perguntaUsuario(List<Conta> todas, Poupanca poupancaAtual) {
+        System.out.println("Digite sua conta\n");
+        Scanner leitor = new Scanner(System.in);
+        String conta = leitor.next();
+        clearScreen();
+        for (Conta cadaConta : todas) {
+            if (cadaConta.getCodigoConta().equals(conta)) {
+                contaAtual = cadaConta;
+                poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void retirarExtrato(List<Extrato> extratos) {
+        clearScreen();
+        for (Extrato e : extratos) {
+            if ((e.getConta()).equals(this)) {
+                System.out.println(e.getData() + " - " + e.getValorMexido() + " - " + (e.getConta().getCodigoConta()) + " - " + e.getTipoMovimento() + "\n");
+            }
+        }
+    }
+
+    public void transferir(List<Conta> contas, List<Extrato> extratos) {
+        clearScreen();
+        System.out.println("Digite a conta que deseja depositar");
+        Scanner leitor = new Scanner(System.in);
+        String contaProcurada = leitor.next();
+
+        for (Conta c : contas) {
+            if ((c.getCodigoConta()).equals(contaProcurada)) {
+                boolean tipoMovimento = true;
+                Double valor = -50.0;
+                while (valor < 0.0) {
+                    System.out.println("\nDigite o valor que gostaria de transferir:\n");
+                    leitor = new Scanner(System.in);
+                    valor = Double.parseDouble(leitor.next());
+                    if (valor < 0) {
+                        System.out.println("É impossível realizar depósitos negativos!");
+                    }
+                }
+                if (valor > this.getSaldo()) {
+                    System.out.println("Saldo insuficiente para realizar a transação.");
+                } else {
+                    this.setSaldo(this.getSaldo() - valor);
+                    c.setSaldo(c.getSaldo() + valor);
+                    Extrato extratoSaida = new Extrato(new Date(), valor, false, this);
+                    Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
+                    extratos.add(extratoSaida);
+                    extratos.add(extratoEntrada);
+                }
+            }
+        }
+    }
+
+    public void depositar(List<Conta> contas, List<Extrato> extratos) {
+        clearScreen();
+        System.out.println("\nDigite a conta que deseja depositar:\n");
+        Scanner leitor = new Scanner(System.in);
+        String contaProcurada = leitor.next();
+
+        for (Conta c : contas) {
+            if ((c.getCodigoConta()).equals(contaProcurada)) {
+                boolean tipoMovimento = true;
+                Double valor = -50.0;
+                while (valor < 0.0) {
+                    System.out.println("\nDigite o valor que gostaria de depositar:\n");
+                    leitor = new Scanner(System.in);
+                    valor = Double.parseDouble(leitor.next());
+                    if (valor < 0) {
+                        System.out.println("É impossível realizar depósitos negativos!");
+                    }
+                }
+                c.setSaldo(c.getSaldo() + valor);
+                //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
+                Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
+                //extratos.add(extratoSaida);
+                extratos.add(extratoEntrada);
+            }
+        }
+    }
 }

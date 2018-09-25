@@ -23,8 +23,9 @@ public class Extrato {
         this.valorMexido = valorMexido;
         this.tipoMovimento = tipoMovimento;
         this.conta = conta;
-        
     }
+    
+    public Extrato(){}
     
     public Conta getConta() {
         return conta;
@@ -82,6 +83,4 @@ public class Extrato {
         }
         return true;
     }
-    
-    
 }

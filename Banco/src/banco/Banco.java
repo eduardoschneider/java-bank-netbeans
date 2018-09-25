@@ -9,7 +9,6 @@ import static banco.Cliente.cadastrarCliente;
 import static banco.Conta.cadastrarConta;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,14 +17,18 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Banco {
+
     public static int idCliente = 5;
     public static int idConta = 5;
-    public static Conta contaAtual = null;
-    public static int exit = 0;
-    public static List<Cliente> clientes;
-    public static List<Conta> contas;
-    public static List<Poupanca> poupancas;
-    public static List<Extrato> extratos;
+    public static int contadorPoupancaDepositos = 0;
+    public static Conta contaAtual = new Conta();
+    public static Poupanca poupancaAtual = new Poupanca();
+    public static List<Cliente> clientes = new ArrayList();
+    public static List<Conta> contas = new ArrayList();
+    public static List<Poupanca> poupancas = new ArrayList();
+    public static List<PoupancaDeposito> poupancaMovimento = new ArrayList();
+    public static List<Extrato> extratos = new ArrayList();
+    public static Helper help = new Helper();
 
     /**
      * @param args the command line arguments
@@ -41,140 +44,89 @@ public class Banco {
         }
     }
 
-    public static void showAdminMenu() {
-        System.out.println("------------------------------------------------------");
-        System.out.println("Selecione uma das opções administrativas:");
-        System.out.println("-----CLIENTES------");
-        System.out.println("1- Cadastrar");
-        System.out.println("2- Excluir");
-        System.out.println("3- Alterar");
-        System.out.println("4- Pesquisar");
-        System.out.println("\n");
-        System.out.println("-----CONTAS------");
-        System.out.println("5- Cadastrar");
-        System.out.println("6- Excluir");
-        System.out.println("7- Alterar");
-        System.out.println("8- Pesquisar");
-        System.out.println("\n");
-        System.out.println("9- Cadastrar Investimentos");
-        System.out.println("10- Avançar o dia");
-        System.out.println("11- Voltar");
-        System.out.println("10- Sair");
-        System.out.println("------------------------------------------------------");
-    }
-
-    public static void showNormalMenu() {
-        System.out.println("------------------------------------------------------");
-        System.out.println("Selecione uma das opções:");
-        System.out.println("1- Depósito");
-        System.out.println("2- Pagamento");
-        System.out.println("3- Extrato");
-        System.out.println("4- Saque");
-        System.out.println("5- CDB");
-        System.out.println("6- Saldo");
-        System.out.println("7- Investimento");
-        System.out.println("8- Transferência");
-        System.out.println("9- Voltar");
-        System.out.println("10- Sair");
-        System.out.println("------------------------------------------------------");
-    }
-
-    private static int perguntaTipo() {
-        System.out.println("------------------------------------------------------");
-        System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
-        System.out.println("1- Administrador");
-        System.out.println("2- Usuário Normal\n");
-        System.out.println("------------------------------------------------------");
-
-        Scanner leitor = new Scanner(System.in);
-        int opcao = leitor.nextInt();
-
-        return opcao;
-    }
-
     private static void metodoPrincipal() {
-        populaParaTestes();
+        help.populaParaTestes(clientes, contas, poupancas, poupancaMovimento, extratos);
         clearScreen();
-        
+
         int opcao = 0;
-        
+
         Scanner leitor = new Scanner(System.in);
-        while (opcao != 3)
-        {
-        opcao = perguntaTipo();
-        switch (opcao) {
-            case 1:
-                clearScreen();
-                while ((opcao != 12) && (opcao != 11)) {
-                    showAdminMenu();
-                    opcao = leitor.nextInt();
-                    switch (opcao) {
-                        case 1:
-                            clientes.add(cadastrarCliente(idCliente));
-                            idCliente++;
-                            break;
-                        case 2:
-                            //excluir cliente
-                            break;
-                        case 3:
-                            //alterar cliente
-                            break;
-                        case 4:
-                            //pesquisar cliente
-                            break;
-                        case 5:
-                            contas.add(cadastrarConta(clientes, idConta));
-                            idConta++;
-                            break;
-                        case 6:
-                            //excluir conta
-                            break;
-                        case 7:
-                            //alterar conta
-                            break;
-                        case 8:
-                            //pesquisar conta
-                            break;
-                        case 9:
-                            //cadastrar invstimentos
-                            break;
-                        case 10:
-                            //avançar o dia
-                            break;
-                        case 11:
-                            //voltar
-                            break;
-                        case 12:
-                            System.out.println("Obrigado por utilizar o banco!");
-                            break;
-                        default:
-                            System.out.println("Digite uma opção válida.");
-                            break;
-                    }
-                }
-                clearScreen();
-                break;
-            case 2:
-                clearScreen();
-                if (perguntaUsuario(contas)) {
+        while (opcao != 3) {
+            opcao = help.perguntaTipo();
+            switch (opcao) {
+                case 1:
                     clearScreen();
-                    while ((opcao != 10) && (opcao != 9)) {
-                        showNormalMenu();
+                    while ((opcao != 12) && (opcao != 11)) {
+                        help.showAdminMenu();
                         opcao = leitor.nextInt();
+                        switch (opcao) {
+                            case 1:
+                                clientes.add(cadastrarCliente(idCliente));
+                                idCliente++;
+                                break;
+                            case 2:
+                                //excluir cliente
+                                break;
+                            case 3:
+                                //alterar cliente
+                                break;
+                            case 4:
+                                //pesquisar cliente
+                                break;
+                            case 5:
+                                contas.add(cadastrarConta(clientes, idConta));
+                                idConta++;
+                                break;
+                            case 6:
+                                //excluir conta
+                                break;
+                            case 7:
+                                //alterar conta
+                                break;
+                            case 8:
+                                //pesquisar conta
+                                break;
+                            case 9:
+                                //cadastrar invstimentos
+                                break;
+                            case 10:
+                                //avançar o dia
+                                break;
+                            case 11:
+                                //voltar
+                                break;
+                            case 12:
+                                System.out.println("Obrigado por utilizar o banco!");
+                                break;
+                            default:
+                                System.out.println("Digite uma opção válida.");
+                                break;
+                        }
+                    }
+                    clearScreen();
+                    break;
+                case 2:
+                    clearScreen();
+                    if (contaAtual.perguntaUsuario(contas, poupancaAtual)) {
+                        clearScreen();
+                        while ((opcao != 11) && (opcao != 12)) {
+                            help.showNormalMenu();
+                            opcao = leitor.nextInt();
                             switch (opcao) {
                                 case 1:
-                                    depositar();
+                                    contaAtual.depositar(contas, extratos);
                                     break;
                                 case 2:
-                                   //pagar();
+                                    //pagar();
                                     break;
                                 case 3:
-                                    retirarExtrato(contaAtual);
+                                    contaAtual.retirarExtrato(extratos);
                                     break;
                                 case 4:
                                     Extrato saque = contaAtual.sacar(contaAtual);
-                                    if (saque != null)
-                                       extratos.add(saque);
+                                    if (saque != null) {
+                                        extratos.add(saque);
+                                    }
                                     break;
                                 case 5:
                                     //CDB
@@ -186,12 +138,22 @@ public class Banco {
                                     //Investimentos
                                     break;
                                 case 8:
-                                    transferir();
+                                    contaAtual.transferir(contas, extratos);
                                     break;
                                 case 9:
-                                    //VOltar
+                                    if (poupancaAtual != null) {
+                                        poupancaAtual.depositarPoupanca(contaAtual, extratos, poupancaMovimento, contadorPoupancaDepositos);
+                                    }
                                     break;
                                 case 10:
+                                    if (poupancaAtual != null) //sacarPoupanca();
+                                    {
+                                        break;
+                                    }
+                                case 11:
+                                    //VOltar
+                                    break;
+                                case 12:
                                     System.out.println("Obrigado por utilizar o banco!");
                                     break;
                                 default:
@@ -200,139 +162,12 @@ public class Banco {
                             }
                         }
                     }
-                clearScreen();
-                break;
-            default:
-                System.out.println("Digite uma opção válida!");
-                break;
-        }
-    }
-    }
-    
-    private static void populaParaTestes(){
-        
-        Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "464.833.218-05", new Date());
-        Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "464.833.218-05", new Date());
-        Cliente cliente3 = new Cliente(2, "Eduardo Schneider333", "464.833.218-05", new Date());
-        Cliente cliente4 = new Cliente(3, "Eduardo Schneider444", "464.833.218-05", new Date());
-        Cliente cliente5 = new Cliente(4, "Eduardo Schneider555", "464.833.218-05", new Date());
-        clientes = new ArrayList();
-        clientes.add(cliente1);
-        clientes.add(cliente2);
-        clientes.add(cliente3);
-        clientes.add(cliente4);
-        clientes.add(cliente5);
-
-        Conta conta1 = new Conta("000-00", cliente1, 500.0);
-        Conta conta2 = new Conta("000-01", cliente2, 200.0);
-        Conta conta3 = new Conta("000-02", cliente3, 300.0);
-        Conta conta4 = new Conta("000-03", cliente4, 400.0);
-        Conta conta5 = new Conta("000-04", cliente5, 100.0);
-        contas = new ArrayList();
-        contas.add(conta1);
-        contas.add(conta2);
-        contas.add(conta3);
-        contas.add(conta4);
-        contas.add(conta5);
-
-        Poupanca poupanca1 = new Poupanca(0, cliente1, 0.0);
-        Poupanca poupanca2 = new Poupanca(1, cliente2, 0.0);
-        Poupanca poupanca3 = new Poupanca(2, cliente3, 0.0);
-        Poupanca poupanca4 = new Poupanca(3, cliente4, 0.0);
-        Poupanca poupanca5 = new Poupanca(4, cliente5, 0.0);
-        poupancas = new ArrayList();
-        poupancas.add(poupanca1);
-        poupancas.add(poupanca2);
-        poupancas.add(poupanca3);
-        poupancas.add(poupanca4);
-        poupancas.add(poupanca5);
-
-        extratos = new ArrayList(); //lista de extratos
-        Extrato extratoSaida = new Extrato(new Date(), 150.0, false, conta1);
-        extratos.add(extratoSaida);
-        extratoSaida = new Extrato(new Date(), 350.0, false, conta1);
-        extratos.add(extratoSaida);
-        
-    }
-
-    public static boolean perguntaUsuario(List<Conta> todas) {
-        System.out.println("Digite sua conta\n");
-        Scanner leitor = new Scanner(System.in);
-        String conta = leitor.next();
-        clearScreen();
-        for (Conta cadaConta : todas) {
-            if (cadaConta.getCodigoConta().equals(conta)) {
-                contaAtual = cadaConta;
-                return true;
+                    clearScreen();
+                    break;
+                default:
+                    System.out.println("Digite uma opção válida!");
+                    break;
             }
         }
-        return false;
     }
-
-    private static void depositar(){
-        clearScreen();
-        System.out.println("\nDigite a conta que deseja depositar:\n");
-        Scanner leitor = new Scanner(System.in);
-        String contaProcurada = leitor.next();
-        
-        for (Conta c : contas) {
-            if ((c.getCodigoConta()).equals(contaProcurada)){
-                boolean tipoMovimento = true;
-                Double valor = -50.0;
-                while (valor < 0.0){
-                    System.out.println("\nDigite o valor que gostaria de depositar:\n");
-                    leitor = new Scanner(System.in);
-                    valor = Double.parseDouble(leitor.next());
-                    if (valor < 0)
-                        System.out.println("É impossível realizar depósitos negativos!");
-                }
-                c.setSaldo(c.getSaldo() + valor);
-                //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
-                Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
-                //extratos.add(extratoSaida);
-                extratos.add(extratoEntrada);
-            }
-        }   
-    }
-    
-    private static void transferir(){
-        clearScreen();
-        System.out.println("Digite a conta que deseja depositar");
-        Scanner leitor = new Scanner(System.in);
-        String contaProcurada = leitor.next();
-        
-        for (Conta c : contas) {
-            if ((c.getCodigoConta()).equals(contaProcurada)){
-                boolean tipoMovimento = true;
-                Double valor = -50.0;
-                while (valor < 0.0){
-                    System.out.println("\nDigite o valor que gostaria de transferir:\n");
-                    leitor = new Scanner(System.in);
-                    valor = Double.parseDouble(leitor.next());
-                    if (valor < 0)
-                        System.out.println("É impossível realizar depósitos negativos!");
-                }
-                if (valor > contaAtual.getSaldo()){
-                    System.out.println("Saldo insuficiente para realizar a transação.");
-                }
-                else {
-                    contaAtual.setSaldo(contaAtual.getSaldo() - valor);
-                    c.setSaldo(c.getSaldo() + valor);
-                    Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
-                    Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
-                    extratos.add(extratoSaida);
-                    extratos.add(extratoEntrada);
-                }
-            }
-        }   
-    }
-    
-    private static void retirarExtrato(Conta conta) {
-        clearScreen();
-        for (Extrato e : extratos) {
-             if ((e.getConta()).equals(conta)){
-                System.out.println(e.getData() + " - " + e.getValorMexido() + " - " + (e.getConta().getCodigoConta()) + " - " + e.getTipoMovimento() + "\n");
-            }
-        }
-    } 
 }
