@@ -5,6 +5,7 @@
  */
 package banco;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,12 +16,12 @@ public class CDB_Extrato {
     private int id;
     private CDB cdb;
     private Cliente cliente;
-    private double saldo;
+    private BigDecimal saldo;
     private Date datainicio;
     private Date datatermino;
     private boolean status;
     
-    public CDB_Extrato(int id, CDB cdb, Cliente cliente, double saldo, Date datainicio, Date datatermino, boolean status) {
+    public CDB_Extrato(int id, CDB cdb, Cliente cliente, BigDecimal saldo, Date datainicio, Date datatermino, boolean status) {
         this.id = id;
         this.cdb = cdb;
         this.cliente = cliente;
@@ -54,11 +55,11 @@ public class CDB_Extrato {
         this.cliente = cliente;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

@@ -5,6 +5,7 @@
  */
 package banco;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -14,11 +15,11 @@ import java.util.Objects;
  */
 public class Extrato {
     private Date data;
-    private double valorMexido;
+    private BigDecimal valorMexido;
     private boolean tipoMovimento; //false = saida true = entrada
     private Conta conta;
 
-    public Extrato(Date data, double valorMexido, boolean tipoMovimento, Conta conta){
+    public Extrato(Date data, BigDecimal valorMexido, boolean tipoMovimento, Conta conta){
         this.data = data;
         this.valorMexido = valorMexido;
         this.tipoMovimento = tipoMovimento;
@@ -43,11 +44,11 @@ public class Extrato {
         this.data = data;
     }
 
-    public double getValorMexido() {
+    public BigDecimal getValorMexido() {
         return valorMexido;
     }
 
-    public void setValorMexido(double valorMexido) {
+    public void setValorMexido(BigDecimal valorMexido) {
         this.valorMexido = valorMexido;
     }
 

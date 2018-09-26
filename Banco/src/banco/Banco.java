@@ -29,13 +29,14 @@ public class Banco {
     public static List<PoupancaDeposito> poupancaMovimento = new ArrayList();
     public static List<Extrato> extratos = new ArrayList();
     public static Helper help = new Helper();
+    
 
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        metodoPrincipal();
+        new Banco();
     }
 
     public static void clearScreen() {
@@ -44,7 +45,7 @@ public class Banco {
         }
     }
 
-    private static void metodoPrincipal() {
+    private Banco() {
         help.populaParaTestes(clientes, contas, poupancas, poupancaMovimento, extratos);
         clearScreen();
 

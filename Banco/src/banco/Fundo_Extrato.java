@@ -5,6 +5,7 @@
  */
 package banco;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -16,11 +17,11 @@ public class Fundo_Extrato {
     private int id;
     private Fundo fundo;
     private Cliente cliente;
-    private double saldo;
+    private BigDecimal saldo;
     private Date datainicio;
     private boolean status;
 
-    public Fundo_Extrato(int id, Fundo fundo, Cliente cliente, double saldo, Date datainicio, boolean status) {
+    public Fundo_Extrato(int id, Fundo fundo, Cliente cliente, BigDecimal saldo, Date datainicio, boolean status) {
         this.id = id;
         this.fundo = fundo;
         this.cliente = cliente;
@@ -53,11 +54,11 @@ public class Fundo_Extrato {
         this.cliente = cliente;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

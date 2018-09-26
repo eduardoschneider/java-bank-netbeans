@@ -7,6 +7,7 @@ package banco;
 
 import static banco.Banco.clearScreen;
 import static banco.Banco.poupancas;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -18,9 +19,9 @@ import java.util.Scanner;
 public class Poupanca {
     private int idPoupanca;
     private Cliente cliente;
-    private double saldo;
+    private BigDecimal saldo;
 
-    public Poupanca(int idPoupanca, Cliente cliente, double saldo) {
+    public Poupanca(int idPoupanca, Cliente cliente, BigDecimal saldo) {
         this.idPoupanca = idPoupanca;
         this.cliente = cliente;
         this.saldo = saldo;
@@ -46,11 +47,11 @@ public class Poupanca {
         this.cliente = cliente;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }    
     
@@ -69,11 +70,11 @@ public class Poupanca {
         clearScreen();
         System.out.println("Digite o valor que deseja depositar na sua poupança: \n");
         Scanner leitor = new Scanner(System.in);
-        Double valor = Double.parseDouble(leitor.next());
+        BigDecimal valor = new BigDecimal(leitor.next());
         
-        if (contaAtual.getSaldo() > valor) {
-            contaAtual.setSaldo(contaAtual.getSaldo() - valor);
-            this.setSaldo(this.getSaldo() + valor);
+        if ((contaAtual.getSaldo()).compareTo(valor.add(new BigDecimal("0.1"))) > 0) {
+            contaAtual.setSaldo((contaAtual.getSaldo()).subtract(valor));
+            this.setSaldo((this.getSaldo()).add(valor));
             Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
             extratos.add(extratoSaida);
             PoupancaDeposito movimento = new PoupancaDeposito(contadorPoupancaDepositos, this, valor, new Date(), new Date(), new Date(), true);

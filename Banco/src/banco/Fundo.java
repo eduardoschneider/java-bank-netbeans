@@ -5,6 +5,8 @@
  */
 package banco;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author eduardo.schneider
@@ -13,9 +15,9 @@ public class Fundo {
 
     private int id;
     private String nome;
-    private double saldo;
+    private BigDecimal saldo;
 
-    public Fundo(int id, String nome, double saldo) {
+    public Fundo(int id, String nome, BigDecimal saldo) {
         this.id = id;
         this.nome = nome;
         this.saldo = saldo;
@@ -37,11 +39,11 @@ public class Fundo {
         this.nome = nome;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 }

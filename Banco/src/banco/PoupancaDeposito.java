@@ -5,6 +5,7 @@
  */
 package banco;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,13 +15,13 @@ import java.util.Date;
 public class PoupancaDeposito {
     private int idPoupancaDeposito;
     private Poupanca contapoupanca;
-    private double saldo; //juros e retiradas movimentam o saldo, se saldo for 
+    private BigDecimal saldo; //juros e retiradas movimentam o saldo, se saldo for 
     private Date dataInicio;
     private Date datatermino;
     private Date aniversario;
     private boolean status; //ativo ou inativo
 
-    public PoupancaDeposito(int idPoupancaDeposito, Poupanca contapoupanca, double saldo, Date dataInicio, Date datatermino, Date aniversario, boolean status) {
+    public PoupancaDeposito(int idPoupancaDeposito, Poupanca contapoupanca, BigDecimal saldo, Date dataInicio, Date datatermino, Date aniversario, boolean status) {
         this.idPoupancaDeposito = idPoupancaDeposito;
         this.contapoupanca = contapoupanca;
         this.saldo = saldo;
@@ -46,11 +47,11 @@ public class PoupancaDeposito {
         this.contapoupanca = contapoupanca;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

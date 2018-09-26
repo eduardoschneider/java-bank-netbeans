@@ -7,6 +7,7 @@ package banco;
 
 import static banco.Banco.clearScreen;
 import static banco.Banco.contaAtual;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -20,9 +21,9 @@ public class Conta {
 
     private String codigoConta;
     private Cliente cliente;
-    private double saldo;
+    private BigDecimal saldo;
 
-    public Conta(String codigoConta, Cliente cliente, double saldo) {
+    public Conta(String codigoConta, Cliente cliente, BigDecimal saldo) {
         this.codigoConta = codigoConta;
         this.cliente = cliente;
         this.saldo = saldo;
@@ -47,11 +48,11 @@ public class Conta {
         this.codigoConta = codigoConta;
     }
 
-    public double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 
@@ -83,14 +84,14 @@ public class Conta {
     public Extrato sacar(Conta contaAtual) {
         System.out.println("Digite o valor que deseja sacar:\n");
         Scanner leitor = new Scanner(System.in);
-        Double valor = Double.parseDouble(leitor.next());
+        BigDecimal valor = new BigDecimal(leitor.next());
 
-        if (contaAtual.getSaldo() < valor) {
+        if ((contaAtual.getSaldo()).compareTo(valor) < 0) {
             System.out.println("Saldo insuficiente para realizar o saque.\n");
             return null;
         }
 
-        contaAtual.setSaldo(contaAtual.getSaldo() - valor);
+        contaAtual.setSaldo((contaAtual.getSaldo()).subtract(valor));
         Extrato extrato = new Extrato(new Date(), valor, false, contaAtual);
 
         return extrato;
@@ -114,7 +115,7 @@ public class Conta {
             }
         }
         if (atual != null) {
-            conta = new Conta("000-0" + idConta, atual, 0.0);
+            conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
             idConta++;
         } else {
 
@@ -159,20 +160,20 @@ public class Conta {
         for (Conta c : contas) {
             if ((c.getCodigoConta()).equals(contaProcurada)) {
                 boolean tipoMovimento = true;
-                Double valor = -50.0;
-                while (valor < 0.0) {
+                BigDecimal valor = new BigDecimal("-50.0");
+                while (valor.compareTo(new BigDecimal("0.0")) < 0) {
                     System.out.println("\nDigite o valor que gostaria de transferir:\n");
                     leitor = new Scanner(System.in);
-                    valor = Double.parseDouble(leitor.next());
-                    if (valor < 0) {
+                    valor = new BigDecimal(leitor.next());
+                    if (valor.compareTo(new BigDecimal("0.0")) < 0) {
                         System.out.println("É impossível realizar depósitos negativos!");
                     }
                 }
-                if (valor > this.getSaldo()) {
+                if (valor.compareTo(this.getSaldo()) > 0) {
                     System.out.println("Saldo insuficiente para realizar a transação.");
                 } else {
-                    this.setSaldo(this.getSaldo() - valor);
-                    c.setSaldo(c.getSaldo() + valor);
+                    this.setSaldo(this.getSaldo().subtract(valor));
+                    c.setSaldo(c.getSaldo().add(valor));
                     Extrato extratoSaida = new Extrato(new Date(), valor, false, this);
                     Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
                     extratos.add(extratoSaida);
@@ -190,17 +191,16 @@ public class Conta {
 
         for (Conta c : contas) {
             if ((c.getCodigoConta()).equals(contaProcurada)) {
-                boolean tipoMovimento = true;
-                Double valor = -50.0;
-                while (valor < 0.0) {
+                BigDecimal valor = new BigDecimal("-50.0");
+                while (valor.compareTo(new BigDecimal("0.0")) < 0) {
                     System.out.println("\nDigite o valor que gostaria de depositar:\n");
                     leitor = new Scanner(System.in);
-                    valor = Double.parseDouble(leitor.next());
-                    if (valor < 0) {
+                    valor = new BigDecimal(leitor.next());
+                    if (valor.compareTo(new BigDecimal("0.0")) < 0) {
                         System.out.println("É impossível realizar depósitos negativos!");
                     }
                 }
-                c.setSaldo(c.getSaldo() + valor);
+                c.setSaldo(c.getSaldo().add(valor));
                 //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
                 Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
                 //extratos.add(extratoSaida);
