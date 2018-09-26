@@ -6,6 +6,7 @@
 package banco;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -58,6 +59,8 @@ public class Helper {
 
     public int perguntaTipo() {
         System.out.println("███████████████████████████████████");
+        System.out.println("███████  BEM VINDO AO BANCO EM JAVA ☕ ████████");
+        System.out.println("███████████████████████████████████");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
         System.out.println("1- Administrador");
         System.out.println("2- Usuário Normal\n");
@@ -71,11 +74,11 @@ public class Helper {
     
     public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<PoupancaDeposito> poupancaMovimento, List<Extrato> extratos){
         
-        Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "464.833.218-05", new Date());
-        Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "464.833.218-05", new Date());
-        Cliente cliente3 = new Cliente(2, "Eduardo Schneider333", "464.833.218-05", new Date());
-        Cliente cliente4 = new Cliente(3, "Eduardo Schneider444", "464.833.218-05", new Date());
-        Cliente cliente5 = new Cliente(4, "Eduardo Schneider555", "464.833.218-05", new Date());
+        Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "46483321805", new Date());
+        Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "46483321806", new Date());
+        Cliente cliente3 = new Cliente(2, "Eduardo Schneider333", "46483321807", new Date());
+        Cliente cliente4 = new Cliente(3, "Eduardo Schneider444", "46483321808", new Date());
+        Cliente cliente5 = new Cliente(4, "Eduardo Schneider555", "46483321809", new Date());
         clientes.add(cliente1);
         clientes.add(cliente2);
         clientes.add(cliente3);
@@ -102,5 +105,17 @@ public class Helper {
         extratos.add(extratoSaida);
         extratoSaida = new Extrato(new Date(), new BigDecimal("350.0"), false, conta1);
         extratos.add(extratoSaida);
+    }
+    
+    public Date incrementaDia(Date data){
+        System.out.println("Digite quantos dias quer avançar: (Um mês = 30)\n");
+        Scanner leitor = new Scanner(System.in);
+        int dia = Integer.parseInt(leitor.next());
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(data); 
+        c.add(Calendar.DATE, dia);
+        data = c.getTime();
+        
+        return data;
     }
 }

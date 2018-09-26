@@ -9,6 +9,7 @@ import static banco.Cliente.cadastrarCliente;
 import static banco.Conta.cadastrarConta;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,24 +19,14 @@ import java.util.Scanner;
  */
 public class Banco {
 
-    public static int idCliente = 5;
-    public static int idConta = 5;
-    public static int contadorPoupancaDepositos = 0;
-    public static Conta contaAtual = new Conta();
-    public static Poupanca poupancaAtual = new Poupanca();
-    public static List<Cliente> clientes = new ArrayList();
-    public static List<Conta> contas = new ArrayList();
-    public static List<Poupanca> poupancas = new ArrayList();
-    public static List<PoupancaDeposito> poupancaMovimento = new ArrayList();
-    public static List<Extrato> extratos = new ArrayList();
-    public static Helper help = new Helper();
-    
-
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
      */
-    public static void main(String[] args) throws IOException {
+    
+    @SuppressWarnings("ResultOfObjectAllocationIgnored") //só pra warning não encher o saco (:
+    public static void main(String[] args) throws IOException, InterruptedException {
         new Banco();
     }
 
@@ -45,7 +36,19 @@ public class Banco {
         }
     }
 
-    private Banco() {
+    private Banco() throws InterruptedException {
+        Date dataDeHoje = new Date();
+        int idCliente = 5;
+        int idConta = 5;
+        Helper help = new Helper();
+        Conta contaAtual = new Conta();
+        Poupanca poupancaAtual = new Poupanca();
+        List<Cliente> clientes = new ArrayList();
+        List<Conta> contas = new ArrayList();
+        List<Poupanca> poupancas = new ArrayList();
+        List<PoupancaDeposito> poupancaMovimento = new ArrayList();
+        List<Extrato> extratos = new ArrayList();
+        int contadorPoupancaDepositos = 0;
         help.populaParaTestes(clientes, contas, poupancas, poupancaMovimento, extratos);
         clearScreen();
 
@@ -62,39 +65,53 @@ public class Banco {
                         opcao = leitor.nextInt();
                         switch (opcao) {
                             case 1:
-                                clientes.add(cadastrarCliente(idCliente));
+                                clearScreen();
+                                clientes.add(Cliente.cadastrarCliente(idCliente));
                                 idCliente++;
                                 break;
                             case 2:
-                                //excluir cliente
+                                clearScreen();
+                                Cliente.excluirCliente(clientes, contas);
                                 break;
                             case 3:
+                                clearScreen();
                                 //alterar cliente
                                 break;
                             case 4:
-                                //pesquisar cliente
+                                clearScreen();
+                                Cliente.pesquisarCliente(clientes);
                                 break;
                             case 5:
-                                contas.add(cadastrarConta(clientes, idConta));
+                                clearScreen();
+                                contas.add(cadastrarConta(clientes,contas, idConta));
                                 idConta++;
                                 break;
                             case 6:
-                                //excluir conta
+                                clearScreen();
+                                Conta.excluirConta(contas);
                                 break;
                             case 7:
+                                clearScreen();
                                 //alterar conta
                                 break;
                             case 8:
+                                clearScreen();
                                 //pesquisar conta
                                 break;
                             case 9:
+                                clearScreen();
                                 //cadastrar invstimentos
                                 break;
                             case 10:
-                                //avançar o dia
+                                clearScreen();
+                                dataDeHoje = help.incrementaDia(dataDeHoje);
+                                System.out.println(dataDeHoje);
                                 break;
                             case 11:
-                                //voltar
+                                clearScreen();
+                                /////////////////
+                                ///V O L T A R///
+                                /////////////////
                                 break;
                             case 12:
                                 System.out.println("Obrigado por utilizar o banco!");
@@ -108,45 +125,55 @@ public class Banco {
                     break;
                 case 2:
                     clearScreen();
-                    if (contaAtual.perguntaUsuario(contas, poupancaAtual)) {
+                    if (contaAtual.perguntaUsuario(contas, contaAtual, poupancaAtual, poupancas)) {
                         clearScreen();
                         while ((opcao != 11) && (opcao != 12)) {
                             help.showNormalMenu();
                             opcao = leitor.nextInt();
                             switch (opcao) {
                                 case 1:
+                                    clearScreen();
                                     contaAtual.depositar(contas, extratos);
                                     break;
                                 case 2:
-                                    //pagar();
+                                    clearScreen();
+                                    contaAtual.pagarBoleto(extratos);
                                     break;
                                 case 3:
+                                    clearScreen();
                                     contaAtual.retirarExtrato(extratos);
                                     break;
                                 case 4:
+                                    clearScreen();
                                     Extrato saque = contaAtual.sacar(contaAtual);
                                     if (saque != null) {
                                         extratos.add(saque);
                                     }
                                     break;
                                 case 5:
+                                    clearScreen();
                                     //CDB
                                     break;
                                 case 6:
+                                    clearScreen();
                                     contaAtual.consultarSaldo();
                                     break;
                                 case 7:
+                                    clearScreen();
                                     //Investimentos
                                     break;
                                 case 8:
+                                    clearScreen();
                                     contaAtual.transferir(contas, extratos);
                                     break;
                                 case 9:
+                                    clearScreen();
                                     if (poupancaAtual != null) {
                                         poupancaAtual.depositarPoupanca(contaAtual, extratos, poupancaMovimento, contadorPoupancaDepositos);
                                     }
                                     break;
                                 case 10:
+                                    clearScreen();
                                     if (poupancaAtual != null) //sacarPoupanca();
                                     {
                                         break;

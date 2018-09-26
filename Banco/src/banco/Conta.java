@@ -6,9 +6,9 @@
 package banco;
 
 import static banco.Banco.clearScreen;
-import static banco.Banco.contaAtual;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -97,11 +97,12 @@ public class Conta {
         return extrato;
     }
 
-    public void consultarSaldo() {
+    public void consultarSaldo() throws InterruptedException {
         System.out.println("O seu saldo é de: R$" + this.getSaldo());
+        Thread.sleep(1500);
     }
 
-    public static Conta cadastrarConta(List<Cliente> todos, int idConta) {
+    public static Conta cadastrarConta(List<Cliente> todos, List<Conta> todas, int idConta) {
         System.out.println("Digite o CPF\n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
@@ -114,20 +115,28 @@ public class Conta {
                 atual = cadaCliente;
             }
         }
+        boolean temConta = false;
         if (atual != null) {
-            conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
-            idConta++;
+            for (Conta cadaConta : todas) {
+                if ((cadaConta.getCliente()).getCpfCliente().equals(cpf)) {
+                    temConta = true;
+                }
+            }
+            if (!temConta){
+                conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
+                idConta++;
+            } else {
+                System.out.println("Cliente já possui conta!.");
+            }
         } else {
-
-            clearScreen();
+            System.out.println("Cliente não encontrado.");
             return null;
         }
 
-        clearScreen();
         return conta;
     }
 
-    public boolean perguntaUsuario(List<Conta> todas, Poupanca poupancaAtual) {
+    public boolean perguntaUsuario(List<Conta> todas, Conta contaAtual, Poupanca poupancaAtual, List<Poupanca> poupancas) {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
@@ -135,7 +144,7 @@ public class Conta {
         for (Conta cadaConta : todas) {
             if (cadaConta.getCodigoConta().equals(conta)) {
                 contaAtual = cadaConta;
-                poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente());
+                poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente(), poupancas);
                 return true;
             }
         }
@@ -206,6 +215,53 @@ public class Conta {
                 //extratos.add(extratoSaida);
                 extratos.add(extratoEntrada);
             }
+        }
+    }
+
+    public void pagarBoleto(List<Extrato> extratos) {
+        System.out.println("Digite o código do documento a ser pago:\n");
+        Scanner leitor = new Scanner(System.in);
+        String codigo = leitor.next();
+
+        System.out.println("Digite o valor a ser pago:\n");
+        BigDecimal valor = new BigDecimal(leitor.next());
+
+        if ((this.saldo).compareTo(valor) < 0) {
+            System.out.println("Você não tem saldo suficiente para realizar o pagamento.");
+        } else {
+            this.setSaldo((this.saldo).subtract(valor));
+            Extrato saida = new Extrato(new Date(), valor, false, this);
+            extratos.add(saida);
+            System.out.println("Pagamento realizado com sucesso.");
+        }
+    }
+
+    public static void excluirConta(List<Conta> contas) {
+        System.out.println("Digite o CPF do dono da conta que deseja excluir:\n");
+        Scanner leitor = new Scanner(System.in);
+        String cpf = leitor.next();
+        boolean achouConta = false;
+
+        for (Conta co : contas) {
+            if (((co.getCliente().getCpfCliente())).equals(cpf)) {
+                achouConta = true;
+            }
+        }
+
+        if (achouConta) {
+            System.out.println("Conta encontrada, deseja excluir? (S/N)");
+            String resposta = leitor.next();
+
+            if ((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))) {
+                for (Iterator<Conta> iter = contas.listIterator(); iter.hasNext();) {
+                    Conta a = iter.next();
+                    if (((a.getCliente().getCpfCliente())).equals(cpf)) {
+                        iter.remove();
+                    }
+                }
+            }
+        } else {
+            System.out.println("Conta não encontrada.");
         }
     }
 }

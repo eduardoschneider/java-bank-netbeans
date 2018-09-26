@@ -6,7 +6,6 @@
 package banco;
 
 import static banco.Banco.clearScreen;
-import static banco.Banco.poupancas;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -56,7 +55,7 @@ public class Poupanca {
     }    
     
         
-    public static Poupanca checaExistenciaDePoupanca(Cliente c){
+    public static Poupanca checaExistenciaDePoupanca(Cliente c, List<Poupanca> poupancas){
         
         for (Poupanca p : poupancas){
             if ((p.getCliente()).equals(c))
