@@ -60,7 +60,7 @@ public class Helper {
     public int perguntaTipo() {
         System.out.println("███████████████████████████████████");
         System.out.println("███████  BEM VINDO AO BANCO EM JAVA ☕ ████████");
-        System.out.println("███████████████████████████████████");
+        System.out.println("██████████████❗█████████████████████");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
         System.out.println("1- Administrador");
         System.out.println("2- Usuário Normal\n");
