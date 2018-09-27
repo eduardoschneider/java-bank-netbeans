@@ -6,6 +6,9 @@
 package banco;
 
 import static banco.Banco.clearScreen;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +59,13 @@ public class Cliente {
 
     public Date getDataNasc() {
         return dataNasc;
+    }
+    
+    public String getDataNascString() throws ParseException {
+        DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String str = targetFormat.format(dataNasc);
+        
+        return str;
     }
 
     public void setDataNasc(Date dataNasc) {
@@ -127,7 +137,7 @@ public class Cliente {
         }
     }
     
-    public static void pesquisarCliente(List<Cliente> clientes) throws InterruptedException {
+    public static void pesquisarCliente(List<Cliente> clientes) throws InterruptedException, ParseException {
         System.out.println("Digite o CPF a ser procurado:");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
@@ -146,5 +156,35 @@ public class Cliente {
             System.out.println("Cliente não encontrado :(");
             Thread.sleep(2000);
         }
+    }
+    
+    public static Cliente alterarCliente(List<Cliente> clientes) throws InterruptedException, ParseException{
+        
+        System.out.println("Digite o CPF do cliente que deseja pesquisar:\n");
+        Scanner leitor = new Scanner(System.in);
+        String cpf = leitor.next();
+        clearScreen();
+        Cliente cliente = null;
+        boolean achouCliente = false;
+        for (Cliente co : clientes) {
+            if (((co.getCpfCliente())).equals(cpf)) {
+                cliente = co;
+                achouCliente = true;
+            }
+        }
+
+        if (achouCliente) {
+            System.out.println("CPF: " + cpf);
+            System.out.println((cliente.getNomeCliente()));
+            System.out.println((cliente.getDataNascString()));
+            
+            Thread.sleep(2500);
+        } 
+        else 
+        {
+            System.out.println("Cliente não encontrado.");
+        }
+        
+        return new Cliente();
     }
 }

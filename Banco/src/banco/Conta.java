@@ -7,6 +7,7 @@ package banco;
 
 import static banco.Banco.clearScreen;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -122,7 +123,7 @@ public class Conta {
                     temConta = true;
                 }
             }
-            if (!temConta){
+            if (!temConta) {
                 conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
                 idConta++;
             } else {
@@ -261,6 +262,66 @@ public class Conta {
                 }
             }
         } else {
+            System.out.println("Conta não encontrada.");
+        }
+    }
+
+    public static void alterarConta(List<Conta> contas) throws InterruptedException {
+        System.out.println("Digite o CPF do dono da conta que deseja alterar:\n");
+        Scanner leitor = new Scanner(System.in);
+        String cpf = leitor.next();
+        boolean achouConta = false;
+
+        for (Conta co : contas) {
+            if (((co.getCliente().getCpfCliente())).equals(cpf)) {
+                achouConta = true;
+            }
+        }
+
+        if (achouConta) {
+            System.out.println("Digite o novo código da conta:");
+            String resposta = leitor.next();
+
+            for (Iterator<Conta> iter = contas.listIterator(); iter.hasNext();) {
+                Conta a = iter.next();
+                if (((a.getCliente().getCpfCliente())).equals(cpf)) {
+                    a.setCodigoConta(resposta);
+                }
+            }
+            System.out.println("Conta alterada com sucesso.");
+            Thread.sleep(1000);
+        } 
+        else 
+        {
+            System.out.println("Conta não encontrada.");
+        }
+    }
+    
+    public static void pesquisarConta(List<Conta> contas) throws InterruptedException, ParseException{
+        System.out.println("Digite o CPF do dono da conta que deseja pesquisar:\n");
+        Scanner leitor = new Scanner(System.in);
+        String cpf = leitor.next();
+        clearScreen();
+        Conta conta = null;
+        boolean achouConta = false;
+        for (Conta co : contas) {
+            if (((co.getCliente().getCpfCliente())).equals(cpf)) {
+                conta = co;
+                achouConta = true;
+            }
+        }
+
+        if (achouConta) {
+            System.out.println("CPF: " + cpf);
+            System.out.println((conta.getCliente().getNomeCliente()));
+            System.out.println((conta.getCliente().getDataNascString()));
+            System.out.println("Conta: " + conta.getCodigoConta());
+            System.out.println("Saldo: R$" + conta.getSaldo());
+            
+            Thread.sleep(2500);
+        } 
+        else 
+        {
             System.out.println("Conta não encontrada.");
         }
     }

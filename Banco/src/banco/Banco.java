@@ -8,6 +8,7 @@ package banco;
 import static banco.Cliente.cadastrarCliente;
 import static banco.Conta.cadastrarConta;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Banco {
      */
     
     @SuppressWarnings("ResultOfObjectAllocationIgnored") //só pra warning não encher o saco (:
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, ParseException {
         new Banco();
     }
 
@@ -36,13 +37,13 @@ public class Banco {
         }
     }
 
-    private Banco() throws InterruptedException {
+    private Banco() throws InterruptedException, ParseException {
         Date dataDeHoje = new Date();
         int idCliente = 5;
         int idConta = 5;
         Helper help = new Helper();
         Conta contaAtual = new Conta();
-        Poupanca poupancaAtual = new Poupanca();
+        Poupanca poupancaAtual = null;
         List<Cliente> clientes = new ArrayList();
         List<Conta> contas = new ArrayList();
         List<Poupanca> poupancas = new ArrayList();
@@ -75,7 +76,7 @@ public class Banco {
                                 break;
                             case 3:
                                 clearScreen();
-                                //alterar cliente
+                                Cliente.alterarCliente(clientes);
                                 break;
                             case 4:
                                 clearScreen();
@@ -83,7 +84,7 @@ public class Banco {
                                 break;
                             case 5:
                                 clearScreen();
-                                contas.add(cadastrarConta(clientes,contas, idConta));
+                                contas.add(Conta.cadastrarConta(clientes,contas, idConta));
                                 idConta++;
                                 break;
                             case 6:
@@ -92,11 +93,11 @@ public class Banco {
                                 break;
                             case 7:
                                 clearScreen();
-                                //alterar conta
+                                Conta.alterarConta(contas);
                                 break;
                             case 8:
                                 clearScreen();
-                                //pesquisar conta
+                                Conta.pesquisarConta(contas);
                                 break;
                             case 9:
                                 clearScreen();
@@ -168,18 +169,22 @@ public class Banco {
                                     break;
                                 case 9:
                                     clearScreen();
-                                    if (poupancaAtual != null) {
+                                    if (poupancaAtual != null)
                                         poupancaAtual.depositarPoupanca(contaAtual, extratos, poupancaMovimento, contadorPoupancaDepositos);
-                                    }
+                                    else
+                                        System.out.println("Você não possui uma conta poupança.");
                                     break;
                                 case 10:
                                     clearScreen();
                                     if (poupancaAtual != null) //sacarPoupanca();
-                                    {
-                                        break;
-                                    }
+                                        {}
+                                    else
+                                        System.out.println("Você não possui uma conta poupança.");
                                 case 11:
-                                    //VOltar
+                                    clearScreen();
+                                    /////////////////
+                                    ///V O L T A R///
+                                    /////////////////
                                     break;
                                 case 12:
                                     System.out.println("Obrigado por utilizar o banco!");
