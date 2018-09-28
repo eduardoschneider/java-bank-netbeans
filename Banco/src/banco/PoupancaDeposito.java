@@ -79,10 +79,10 @@ public class PoupancaDeposito {
         this.aniversario = aniversario;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
-
+    
     public void setStatus(boolean status) {
         this.status = status;
     }

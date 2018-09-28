@@ -84,7 +84,7 @@ public class Banco {
                                 break;
                             case 5:
                                 clearScreen();
-                                contas.add(Conta.cadastrarConta(clientes,contas, idConta));
+                                Conta.cadastrarConta(clientes,contas, idConta);
                                 idConta++;
                                 break;
                             case 6:
@@ -117,6 +117,10 @@ public class Banco {
                             case 12:
                                 System.out.println("Obrigado por utilizar o banco!");
                                 break;
+                            case 13:
+                            if (poupancaAtual != null)
+                                poupancaAtual.printaDepositos(poupancaMovimento);
+                            break;
                             default:
                                 System.out.println("Digite uma opção válida.");
                                 break;
@@ -126,7 +130,7 @@ public class Banco {
                     break;
                 case 2:
                     clearScreen();
-                    if (contaAtual.perguntaUsuario(contas, poupancaAtual, poupancas)) {
+                    if ((contaAtual = Conta.perguntaUsuario(contas)) != null) {
                         poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente(), poupancas);
                         clearScreen();
                         while ((opcao != 11) && (opcao != 12)) {
@@ -170,15 +174,14 @@ public class Banco {
                                     break;
                                 case 9:
                                     clearScreen();
-                                    if (poupancaAtual != null)
-                                        poupancaAtual.depositarPoupanca(contaAtual, extratos, poupancaMovimento, contadorPoupancaDepositos);
-                                    else
-                                        System.out.println("Você não possui uma conta poupança.");
+                                    
+                                    Poupanca.depositarPoupanca(contaAtual, poupancas, extratos, poupancaMovimento, contadorPoupancaDepositos);
+                                    contadorPoupancaDepositos++;
                                     break;
                                 case 10:
                                     clearScreen();
-                                    if (poupancaAtual != null) //sacarPoupanca();
-                                        {}
+                                    if (poupancaAtual != null) 
+                                        poupancaAtual.sacarPoupanca(poupancaMovimento);
                                     else
                                         System.out.println("Você não possui uma conta poupança.");
                                 case 11:
@@ -189,6 +192,11 @@ public class Banco {
                                     break;
                                 case 12:
                                     System.out.println("Obrigado por utilizar o banco!");
+                                    break;
+                                case 13:
+                                    clearScreen();
+                                    if (poupancaAtual != null)
+                                        poupancaAtual.printSaldo();
                                     break;
                                 default:
                                     System.out.println("Digite uma opção válida!");

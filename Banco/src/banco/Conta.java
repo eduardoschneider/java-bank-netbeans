@@ -103,8 +103,8 @@ public class Conta {
         Thread.sleep(1500);
     }
 
-    public static Conta cadastrarConta(List<Cliente> todos, List<Conta> todas, int idConta) {
-        System.out.println("Digite o CPF\n");
+    public static void cadastrarConta(List<Cliente> todos, List<Conta> todas, int idConta) throws InterruptedException {
+        System.out.println("Digite o CPF: \n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
 
@@ -125,32 +125,29 @@ public class Conta {
             }
             if (!temConta) {
                 conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
+                todas.add(conta);
                 idConta++;
+                System.out.println("Cadastrado com sucesso.");
             } else {
                 System.out.println("Cliente já possui conta!.");
             }
         } else {
             System.out.println("Cliente não encontrado.");
-            return null;
         }
-
-        return conta;
+        Thread.sleep(1000);
     }
 
-    public boolean perguntaUsuario(List<Conta> todas, Poupanca poupancaAtual, List<Poupanca> poupancas) {
+    public static Conta perguntaUsuario(List<Conta> todas) {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
         clearScreen();
         for (Conta cadaConta : todas) {
             if (cadaConta.getCodigoConta().equals(conta)) {
-                this.setCliente(cadaConta.getCliente());
-                this.setCodigoConta(cadaConta.getCodigoConta());
-                this.setSaldo(cadaConta.getSaldo());
-                return true;
+                return cadaConta;
             }
         }
-        return false;
+        return null;
     }
 
     public void retirarExtrato(List<Extrato> extratos) {

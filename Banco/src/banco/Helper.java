@@ -35,7 +35,8 @@ public class Helper {
         System.out.println("9- Cadastrar Investimentos ████████████████");
         System.out.println("10- Avançar o dia          ████████████████");
         System.out.println("11- Voltar                 ████████████████");
-        System.out.println("10- Sair                   ████████████████");
+        System.out.println("12- Sair                   ████████████████");
+        System.out.println("13- REGISTRO DE DEPOSITOS POUPANÇA1███████████");
         System.out.println("█████████████████████████████████");
     }
 
@@ -79,12 +80,16 @@ public class Helper {
         Cliente cliente3 = new Cliente(2, "Eduardo Schneider333", "46483321807", new Date());
         Cliente cliente4 = new Cliente(3, "Eduardo Schneider444", "46483321808", new Date());
         Cliente cliente5 = new Cliente(4, "Eduardo Schneider555", "46483321809", new Date());
+        Cliente cliente6 = new Cliente(4, "Eduardo Schneider666", "46483321810", new Date());
+        Cliente cliente7 = new Cliente(4, "Eduardo Schneider777", "46483321811", new Date());
         clientes.add(cliente1);
         clientes.add(cliente2);
         clientes.add(cliente3);
         clientes.add(cliente4);
         clientes.add(cliente5);
-
+        clientes.add(cliente6);
+        clientes.add(cliente7);
+        
         Conta conta1 = new Conta("000-00", cliente1, new BigDecimal("500.0"));
         Conta conta2 = new Conta("000-01", cliente2, new BigDecimal("200.0"));
         Conta conta3 = new Conta("000-02", cliente3, new BigDecimal("300.0"));
@@ -96,8 +101,8 @@ public class Helper {
         contas.add(conta4);
         contas.add(conta5);
 
-        Poupanca poupanca1 = new Poupanca(0, cliente1, new BigDecimal("0.0"));
-        Poupanca poupanca5 = new Poupanca(4, cliente5, new BigDecimal("0.0"));
+        Poupanca poupanca1 = new Poupanca("0221", cliente1, new BigDecimal("0.0"));
+        Poupanca poupanca5 = new Poupanca("4334", cliente5, new BigDecimal("0.0"));
         poupancas.add(poupanca1);
         poupancas.add(poupanca5);
 

@@ -9,6 +9,7 @@ import static banco.Banco.clearScreen;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -16,26 +17,27 @@ import java.util.Scanner;
  * @author eduardo.schneider
  */
 public class Poupanca {
-    private int idPoupanca;
+
+    private String codigoPoupanca;
     private Cliente cliente;
     private BigDecimal saldo;
 
-    public Poupanca(int idPoupanca, Cliente cliente, BigDecimal saldo) {
-        this.idPoupanca = idPoupanca;
+    public Poupanca(String idPoupanca, Cliente cliente, BigDecimal saldo) {
+        this.codigoPoupanca = idPoupanca;
         this.cliente = cliente;
         this.saldo = saldo;
     }
-    
-    public Poupanca(){
-        
+
+    public Poupanca() {
+
     }
 
-    public int getIdPoupanca() {
-        return idPoupanca;
+    public String getIdPoupanca() {
+        return codigoPoupanca;
     }
 
-    public void setIdPoupanca(int idPoupanca) {
-        this.idPoupanca = idPoupanca;
+    public void setIdPoupanca(String idPoupanca) {
+        this.codigoPoupanca = idPoupanca;
     }
 
     public Cliente getCliente() {
@@ -52,33 +54,127 @@ public class Poupanca {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
-    }    
-    
-        
-    public static Poupanca checaExistenciaDePoupanca(Cliente c, List<Poupanca> poupancas){
-        
-        for (Poupanca p : poupancas){
-            if ((p.getCliente()).equals(c))
-                return p;
-        }
-   
-        return null;        
     }
-    
-     public void depositarPoupanca(Conta contaAtual, List<Extrato> extratos, List<PoupancaDeposito> poupancaMovimento, int contadorPoupancaDepositos){
+
+    public static Poupanca checaExistenciaDePoupanca(Cliente c, List<Poupanca> poupancas) {
+
+        for (Poupanca p : poupancas) {
+            if ((p.getCliente()).equals(c)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    public static void depositarPoupanca(Conta contaAtual, List<Poupanca> poupancas, List<Extrato> extratos, List<PoupancaDeposito> poupancaMovimento, int contadorPoupancaDepositos) throws InterruptedException {
         clearScreen();
-        System.out.println("Digite o valor que deseja depositar na sua poupança: \n");
+        System.out.println("Digite o valor que deseja depositar na poupança: \n");
         Scanner leitor = new Scanner(System.in);
         BigDecimal valor = new BigDecimal(leitor.next());
-        
-        if ((contaAtual.getSaldo()).compareTo(valor.add(new BigDecimal("0.1"))) > 0) {
-            contaAtual.setSaldo((contaAtual.getSaldo()).subtract(valor));
-            this.setSaldo((this.getSaldo()).add(valor));
-            Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
-            extratos.add(extratoSaida);
-            PoupancaDeposito movimento = new PoupancaDeposito(contadorPoupancaDepositos, this, valor, new Date(), new Date(), new Date(), true);
-            poupancaMovimento.add(movimento);
-            contadorPoupancaDepositos++;
+
+        System.out.println("Digite o ID da conta poupanca a ser depositado: \n");
+        String idAlvo = leitor.next();
+        Poupanca poupancaAlvo = null;
+        for (Poupanca p : poupancas) {
+            if (p.getIdPoupanca().equals(idAlvo)) {
+                poupancaAlvo = p;
+            }
         }
+        if (poupancaAlvo != null) {
+            if ((contaAtual.getSaldo()).compareTo(valor.add(new BigDecimal("0.1"))) > 0) {
+                contaAtual.setSaldo((contaAtual.getSaldo()).subtract(valor));
+                poupancaAlvo.setSaldo((poupancaAlvo.getSaldo()).add(valor));
+                Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
+                extratos.add(extratoSaida);
+                PoupancaDeposito movimento = new PoupancaDeposito(contadorPoupancaDepositos, poupancaAlvo, valor, new Date(), new Date(), new Date(), true);
+                poupancaMovimento.add(movimento);
+                System.out.println("Depositado com sucesso.");
+            }
+        } else {
+            System.out.println("Conta poupança inserida não existe.");
+        }
+        Thread.sleep(1500);
+    }
+
+    public void printaDepositos(List<PoupancaDeposito> poupancaMovimento) throws InterruptedException {
+        for (PoupancaDeposito pd : poupancaMovimento) {
+            clearScreen();
+            System.out.println("ID: " + pd.getIdPoupancaDeposito());
+            System.out.println("SALDO: " + pd.getSaldo());
+            System.out.println("CREDOR: " + pd.getContapoupanca().getCliente().getCpfCliente());
+            System.out.println("------------------------------------------------");
+            
+            
+        }
+        
+        Thread.sleep(1500);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.codigoPoupanca);
+        hash = 11 * hash + Objects.hashCode(this.cliente);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Poupanca other = (Poupanca) obj;
+        if (!Objects.equals(this.codigoPoupanca, other.codigoPoupanca)) {
+            return false;
+        }
+        if (!Objects.equals(this.cliente, other.cliente)) {
+            return false;
+        }
+        return true;
+    }
+
+    public void sacarPoupanca(List<PoupancaDeposito> depositos) {
+        System.out.println("Digite o valor que deseja sacar: ");
+        Scanner leitor = new Scanner(System.in);
+        BigDecimal valor = new BigDecimal(leitor.next());
+
+        if (this.getSaldo().compareTo(valor) < 0) {
+            System.out.println("Saldo insuficiente para realizar o saque.");
+        } else {
+            PoupancaDeposito ultimoDeposito = null;
+            BigDecimal valorFinal = this.getSaldo().subtract(valor);
+            while (this.getSaldo().compareTo(valorFinal) > 0) {
+                for (PoupancaDeposito pd : depositos) {
+                    if (pd.getContapoupanca().equals(this)) {
+                        if (pd.getStatus() == true) {
+                            ultimoDeposito = pd;
+                        }
+                    }
+                }
+            if (valor.compareTo(ultimoDeposito.getSaldo()) < 0){
+                ultimoDeposito.setSaldo(ultimoDeposito.getSaldo().subtract(valor));
+                this.setSaldo(this.getSaldo().subtract(valor));
+            }
+            else if (valor.compareTo(ultimoDeposito.getSaldo()) > 0){
+                valor = valor.subtract(ultimoDeposito.getSaldo());
+                this.setSaldo(this.getSaldo().subtract(ultimoDeposito.getSaldo()));
+                ultimoDeposito.setSaldo(new BigDecimal("0.0"));
+                ultimoDeposito.setStatus(false);
+                 
+                }
+            }
+        }
+    }
+
+    public void printSaldo() throws InterruptedException {
+        System.out.println("O saldo da sua poupança é: R$" + this.getSaldo());
+        Thread.sleep(1500);
     }
 }
