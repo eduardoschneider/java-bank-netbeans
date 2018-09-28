@@ -137,15 +137,16 @@ public class Conta {
         return conta;
     }
 
-    public boolean perguntaUsuario(List<Conta> todas, Conta contaAtual, Poupanca poupancaAtual, List<Poupanca> poupancas) {
+    public boolean perguntaUsuario(List<Conta> todas, Poupanca poupancaAtual, List<Poupanca> poupancas) {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
         clearScreen();
         for (Conta cadaConta : todas) {
             if (cadaConta.getCodigoConta().equals(conta)) {
-                contaAtual = cadaConta;
-                poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente(), poupancas);
+                this.setCliente(cadaConta.getCliente());
+                this.setCodigoConta(cadaConta.getCodigoConta());
+                this.setSaldo(cadaConta.getSaldo());
                 return true;
             }
         }
@@ -198,26 +199,23 @@ public class Conta {
         System.out.println("\nDigite a conta que deseja depositar:\n");
         Scanner leitor = new Scanner(System.in);
         String contaProcurada = leitor.next();
-
-        for (Conta c : contas) {
-            if ((c.getCodigoConta()).equals(contaProcurada)) {
-                BigDecimal valor = new BigDecimal("-50.0");
-                while (valor.compareTo(new BigDecimal("0.0")) < 0) {
-                    System.out.println("\nDigite o valor que gostaria de depositar:\n");
-                    leitor = new Scanner(System.in);
-                    valor = new BigDecimal(leitor.next());
-                    if (valor.compareTo(new BigDecimal("0.0")) < 0) {
-                        System.out.println("É impossível realizar depósitos negativos!");
-                    }
-                }
-                c.setSaldo(c.getSaldo().add(valor));
-                //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
-                Extrato extratoEntrada = new Extrato(new Date(), valor, true, c);
-                //extratos.add(extratoSaida);
-                extratos.add(extratoEntrada);
-            }
+        
+        System.out.println("\nDigite o valor que gostaria de depositar:\n");
+        BigDecimal valor = new BigDecimal(leitor.next());
+        
+        if (valor.compareTo(new BigDecimal("0.0")) < 0)
+            System.out.println("É impossível realizar depósitos negativos!");
+        else 
+        {   
+            this.setSaldo(this.getSaldo().add(valor));
+            //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
+            Extrato extratoEntrada = new Extrato(new Date(), valor, true, this);
+            //extratos.add(extratoSaida);
+            extratos.add(extratoEntrada);
         }
     }
+        
+    
 
     public void pagarBoleto(List<Extrato> extratos) {
         System.out.println("Digite o código do documento a ser pago:\n");

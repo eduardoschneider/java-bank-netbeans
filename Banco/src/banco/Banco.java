@@ -43,7 +43,7 @@ public class Banco {
         int idConta = 5;
         Helper help = new Helper();
         Conta contaAtual = new Conta();
-        Poupanca poupancaAtual = null;
+        Poupanca poupancaAtual = new Poupanca();
         List<Cliente> clientes = new ArrayList();
         List<Conta> contas = new ArrayList();
         List<Poupanca> poupancas = new ArrayList();
@@ -126,14 +126,15 @@ public class Banco {
                     break;
                 case 2:
                     clearScreen();
-                    if (contaAtual.perguntaUsuario(contas, contaAtual, poupancaAtual, poupancas)) {
+                    if (contaAtual.perguntaUsuario(contas, poupancaAtual, poupancas)) {
+                        poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente(), poupancas);
                         clearScreen();
                         while ((opcao != 11) && (opcao != 12)) {
                             help.showNormalMenu();
                             opcao = leitor.nextInt();
                             switch (opcao) {
                                 case 1:
-                                    clearScreen();
+                                    clearScreen();              
                                     contaAtual.depositar(contas, extratos);
                                     break;
                                 case 2:
