@@ -5,8 +5,10 @@
  */
 package banco;
 
+import static banco.Banco.clearScreen;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -85,5 +87,17 @@ public class Poupanca_Extrato {
     
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    public static void printaDepositos(List<Poupanca_Extrato> poupancaMovimento) throws InterruptedException {
+    clearScreen();
+    for (Poupanca_Extrato pd : poupancaMovimento) {
+
+        System.out.println("ID: " + pd.getIdPoupancaDeposito());
+        System.out.println("SALDO: " + pd.getSaldo());
+        System.out.println("CREDOR: " + pd.getContapoupanca().getCliente().getCpfCliente());
+        System.out.println("------------------------------------------------");
+    }
+    Thread.sleep(1500);
     }
 }

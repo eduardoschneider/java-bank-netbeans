@@ -9,6 +9,8 @@ import static banco.Cliente.cadastrarCliente;
 import static banco.Conta.cadastrarConta;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,7 @@ public class Banco {
         Date dataDeHoje = new Date();
         int idCliente = 5;
         int idConta = 5;
+        int idCDB = 4;
         Helper help = new Helper();
         Conta contaAtual = new Conta();
         Poupanca poupancaAtual = new Poupanca();
@@ -48,9 +51,12 @@ public class Banco {
         List<Conta> contas = new ArrayList();
         List<Poupanca> poupancas = new ArrayList();
         List<Poupanca_Extrato> poupancaMovimento = new ArrayList();
+        List<CDB> cdbs = new ArrayList();
+        List<CDB_Extrato> cdbMovimento = new ArrayList();
         List<Extrato> extratos = new ArrayList();
         int contadorPoupancaDepositos = 0;
-        help.populaParaTestes(clientes, contas, poupancas, poupancaMovimento, extratos);
+        int contadorCDBDepositos = 0;
+        help.populaParaTestes(clientes, contas, poupancas, extratos, cdbs);
         clearScreen();
 
         int opcao = 0;
@@ -61,7 +67,7 @@ public class Banco {
             switch (opcao) {
                 case 1:
                     clearScreen();
-                    while ((opcao != 12) && (opcao != 11)) {
+                    while ((opcao != 14)) {
                         help.showAdminMenu();
                         opcao = leitor.nextInt();
                         switch (opcao) {
@@ -105,22 +111,38 @@ public class Banco {
                                 break;
                             case 10:
                                 clearScreen();
-                                dataDeHoje = help.incrementaDia(dataDeHoje);
-                                Poupanca.verificaJuros(poupancas, poupancaMovimento, dataDeHoje);
-                                break;
+                                CDB.cadastrarCDB(cdbs, idCDB);
+                                idCDB++;
+                              break;  
                             case 11:
                                 clearScreen();
-                                /////////////////
-                                ///V O L T A R///
-                                /////////////////
+                                Date dataAnterior = dataDeHoje;
+                                dataDeHoje = help.incrementaDia(dataDeHoje);
+                                
+                                LocalDate anterior = dataAnterior.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                                int dayAnterior = anterior.getDayOfYear();
+                                
+                                LocalDate depois = dataDeHoje.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                                int dayAfter = depois.getDayOfYear();
+                                
+                                int diferenca = (dayAfter - dayAnterior);
+                                
+                                for (int i = 0; i <= diferenca; i++){
+                                    Poupanca.verificaJuros(poupancas, poupancaMovimento, dataDeHoje);
+                                    CDB.verificaJuros(cdbs, contas, cdbMovimento, dataDeHoje);
+                                }
                                 break;
                             case 12:
-                                System.out.println("Obrigado por utilizar o banco!");
+                                clearScreen();
+                                if (poupancaAtual != null)
+                                    Poupanca_Extrato.printaDepositos(poupancaMovimento);
                                 break;
                             case 13:
-                            if (poupancaAtual != null)
-                                poupancaAtual.printaDepositos(poupancaMovimento);
-                            break;
+                                clearScreen();
+                                CDB_Extrato.printaDepositos(cdbMovimento);
+                                break;
+                            case 14:
+                                break;
                             default:
                                 System.out.println("Digite uma opção válida.");
                                 break;
@@ -133,7 +155,7 @@ public class Banco {
                     if ((contaAtual = Conta.perguntaUsuario(contas)) != null) {
                         poupancaAtual = Poupanca.checaExistenciaDePoupanca(contaAtual.getCliente(), poupancas);
                         clearScreen();
-                        while ((opcao != 11) && (opcao != 12)) {
+                        while (opcao != 12) {
                             help.showNormalMenu();
                             opcao = leitor.nextInt();
                             switch (opcao) {
@@ -158,7 +180,8 @@ public class Banco {
                                     break;
                                 case 5:
                                     clearScreen();
-                                    //CDB
+                                    CDB.investirCDB(contaAtual, cdbs, cdbMovimento, contadorCDBDepositos);
+                                    contadorCDBDepositos++;
                                     break;
                                 case 6:
                                     clearScreen();
@@ -186,17 +209,10 @@ public class Banco {
                                         System.out.println("Você não possui uma conta poupança.");
                                 case 11:
                                     clearScreen();
-                                    /////////////////
-                                    ///V O L T A R///
-                                    /////////////////
-                                    break;
-                                case 12:
-                                    System.out.println("Obrigado por utilizar o banco!");
-                                    break;
-                                case 13:
-                                    clearScreen();
                                     if (poupancaAtual != null)
                                         poupancaAtual.printSaldo();
+                                    break;
+                                case 12:
                                     break;
                                 default:
                                     System.out.println("Digite uma opção válida!");

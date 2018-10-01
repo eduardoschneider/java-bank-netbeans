@@ -5,14 +5,18 @@
  */
 package banco;
 
+import static banco.Banco.clearScreen;
+import static java.lang.System.in;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author eduardo.schneider
  */
 public class CDB_Extrato {
+
     private int id;
     private CDB cdb;
     private Cliente cliente;
@@ -21,13 +25,12 @@ public class CDB_Extrato {
     private Date datatermino;
     private boolean status;
     
-    public CDB_Extrato(int id, CDB cdb, Cliente cliente, BigDecimal saldo, Date datainicio, Date datatermino, boolean status) {
+    public CDB_Extrato(int id, CDB cdb, Cliente cliente, BigDecimal saldo, Date datainicio, boolean status) {
         this.id = id;
         this.cdb = cdb;
         this.cliente = cliente;
         this.saldo = saldo;
         this.datainicio = datainicio;
-        this.datatermino = datatermino;
         this.status = status;
     }
     
@@ -85,5 +88,19 @@ public class CDB_Extrato {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+    
+    static void printaDepositos(List<CDB_Extrato> cdbMovimento) throws InterruptedException {
+        clearScreen();
+        for (CDB_Extrato cdb : cdbMovimento)
+        {
+            System.out.println("CPF: " + cdb.getCliente().getCpfCliente());
+            System.out.println("NOME: " + cdb.getCliente().getNomeCliente());
+            System.out.println("CDB: " + cdb.getCdb().getNome());
+            System.out.println("VALOR: R$" + cdb.getSaldo());
+            
+            System.out.println("------------------------------------------------");
+        }
+        Thread.sleep(1500);
     }
 }

@@ -92,24 +92,12 @@ public class Poupanca {
                 Poupanca_Extrato movimento = new Poupanca_Extrato(contadorPoupancaDepositos, poupancaAlvo, valor, new Date(), null, new Date(), true);
                 poupancaMovimento.add(movimento);
                 System.out.println("Depositado com sucesso.");
+            } else {
+                System.out.println("Saldo insuficiente na conta corrente para transferir para poupança.");
             }
         } else {
             System.out.println("Conta poupança inserida não existe.");
         }
-        Thread.sleep(1500);
-    }
-
-    public void printaDepositos(List<Poupanca_Extrato> poupancaMovimento) throws InterruptedException {
-        for (Poupanca_Extrato pd : poupancaMovimento) {
-            clearScreen();
-            System.out.println("ID: " + pd.getIdPoupancaDeposito());
-            System.out.println("SALDO: " + pd.getSaldo());
-            System.out.println("CREDOR: " + pd.getContapoupanca().getCliente().getCpfCliente());
-            System.out.println("------------------------------------------------");
-            
-            
-        }
-        
         Thread.sleep(1500);
     }
 

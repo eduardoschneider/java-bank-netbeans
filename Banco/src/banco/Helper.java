@@ -32,11 +32,12 @@ public class Helper {
         System.out.println("7- Alterar                 ████████████████");
         System.out.println("8- Pesquisar               ████████████████");
         System.out.println("█████████████████████████████████");
-        System.out.println("9- Cadastrar Investimentos ████████████████");
-        System.out.println("10- Avançar o dia          ████████████████");
-        System.out.println("11- Voltar                 ████████████████");
-        System.out.println("12- Sair                   ████████████████");
-        System.out.println("13- REGISTRO DE DEPOSITOS POUPANÇA1███████████");
+        System.out.println("9- Cadastrar CDB           ████████████████");
+        System.out.println("9- Cadastrar Fundo Invest. ████████████████");
+        System.out.println("11- Avançar o dia          ████████████████");
+        System.out.println("12- Registros Poupança     ████████████████");
+        System.out.println("13- Registros CDB          ████████████████");
+        System.out.println("14- Sair                   ████████████████");
         System.out.println("█████████████████████████████████");
     }
 
@@ -47,13 +48,13 @@ public class Helper {
         System.out.println("2- Pagamento             ███████████████████");
         System.out.println("3- Extrato               ███████████████████");
         System.out.println("4- Saque                 ███████████████████");
-        System.out.println("5- CDB                   ███████████████████");
+        System.out.println("5- Investir CDB          ███████████████████");
         System.out.println("6- Saldo                 ███████████████████");
         System.out.println("7- Investimento          ███████████████████");
         System.out.println("8- Transferência         ███████████████████");
         System.out.println("9- Depositar Poupança    ███████████████████");
         System.out.println("10- Sacar Poupança       ███████████████████");
-        System.out.println("11- Voltar               ███████████████████");
+        System.out.println("11- Consultar Poupança   ███████████████████");
         System.out.println("12- Sair                 ███████████████████");
         System.out.println("███████████████████████████████████");
     }
@@ -73,7 +74,7 @@ public class Helper {
         return opcao;
     }
     
-    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<Poupanca_Extrato> poupancaMovimento, List<Extrato> extratos){
+    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<Extrato> extratos, List<CDB> cdbs){
         
         Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "46483321805", new Date());
         Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "46483321806", new Date());
@@ -110,6 +111,34 @@ public class Helper {
         extratos.add(extratoSaida);
         extratoSaida = new Extrato(new Date(), new BigDecimal("350.0"), false, conta1);
         extratos.add(extratoSaida);
+        
+        Date vencimento = new Date();
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(vencimento); 
+        c.add(Calendar.DATE, 30);
+        vencimento = c.getTime();
+        
+        CDB cdb30 = new CDB(0, "CDB do ADS", new BigDecimal("0.0"), vencimento);
+        
+        c.add(Calendar.DATE, 30);
+        vencimento = c.getTime();
+        
+        CDB cdb60 = new CDB(1, "CDB da EC", new BigDecimal("0.0"), vencimento);
+        
+        c.add(Calendar.DATE, 30);
+        vencimento = c.getTime();
+        
+        CDB cdb90 = new CDB(2, "CDB do EM", new BigDecimal("0.0"), vencimento);
+        
+        c.add(Calendar.DATE, 30);
+        vencimento = c.getTime();
+        
+        CDB cdb120 = new CDB(3, "CDB do EAD", new BigDecimal("0.0"), vencimento);
+        
+        cdbs.add(cdb30);
+        cdbs.add(cdb60);
+        cdbs.add(cdb90);
+        cdbs.add(cdb120);
     }
     
     public Date incrementaDia(Date data){
