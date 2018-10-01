@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  *
@@ -67,7 +69,7 @@ public class Poupanca {
         return null;
     }
 
-    public static void depositarPoupanca(Conta contaAtual, List<Poupanca> poupancas, List<Extrato> extratos, List<PoupancaDeposito> poupancaMovimento, int contadorPoupancaDepositos) throws InterruptedException {
+    public static void depositarPoupanca(Conta contaAtual, List<Poupanca> poupancas, List<Extrato> extratos, List<Poupanca_Extrato> poupancaMovimento, int contadorPoupancaDepositos) throws InterruptedException {
         clearScreen();
         System.out.println("Digite o valor que deseja depositar na poupança: \n");
         Scanner leitor = new Scanner(System.in);
@@ -87,7 +89,7 @@ public class Poupanca {
                 poupancaAlvo.setSaldo((poupancaAlvo.getSaldo()).add(valor));
                 Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
                 extratos.add(extratoSaida);
-                PoupancaDeposito movimento = new PoupancaDeposito(contadorPoupancaDepositos, poupancaAlvo, valor, new Date(), new Date(), new Date(), true);
+                Poupanca_Extrato movimento = new Poupanca_Extrato(contadorPoupancaDepositos, poupancaAlvo, valor, new Date(), null, new Date(), true);
                 poupancaMovimento.add(movimento);
                 System.out.println("Depositado com sucesso.");
             }
@@ -97,8 +99,8 @@ public class Poupanca {
         Thread.sleep(1500);
     }
 
-    public void printaDepositos(List<PoupancaDeposito> poupancaMovimento) throws InterruptedException {
-        for (PoupancaDeposito pd : poupancaMovimento) {
+    public void printaDepositos(List<Poupanca_Extrato> poupancaMovimento) throws InterruptedException {
+        for (Poupanca_Extrato pd : poupancaMovimento) {
             clearScreen();
             System.out.println("ID: " + pd.getIdPoupancaDeposito());
             System.out.println("SALDO: " + pd.getSaldo());
@@ -134,13 +136,10 @@ public class Poupanca {
         if (!Objects.equals(this.codigoPoupanca, other.codigoPoupanca)) {
             return false;
         }
-        if (!Objects.equals(this.cliente, other.cliente)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.cliente, other.cliente);
     }
 
-    public void sacarPoupanca(List<PoupancaDeposito> depositos) {
+    public void sacarPoupanca(List<Poupanca_Extrato> depositos) {
         System.out.println("Digite o valor que deseja sacar: ");
         Scanner leitor = new Scanner(System.in);
         BigDecimal valor = new BigDecimal(leitor.next());
@@ -148,10 +147,10 @@ public class Poupanca {
         if (this.getSaldo().compareTo(valor) < 0) {
             System.out.println("Saldo insuficiente para realizar o saque.");
         } else {
-            PoupancaDeposito ultimoDeposito = null;
+            Poupanca_Extrato ultimoDeposito = null;
             BigDecimal valorFinal = this.getSaldo().subtract(valor);
             while (this.getSaldo().compareTo(valorFinal) > 0) {
-                for (PoupancaDeposito pd : depositos) {
+                for (Poupanca_Extrato pd : depositos) {
                     if (pd.getContapoupanca().equals(this)) {
                         if (pd.getStatus() == true) {
                             ultimoDeposito = pd;
@@ -172,6 +171,39 @@ public class Poupanca {
             }
         }
     }
+    
+    
+    static void verificaJuros(List<Poupanca> poupancas, List<Poupanca_Extrato> poupancaMovimento, Date dia) {
+       LocalDate localDate = dia.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+       int month = localDate.getMonthValue();
+        
+        Taxas taxas = new Taxas();
+        BigDecimal taxaAtual;
+        if (month >= 7){
+            taxaAtual = taxas.getSelicMensal()[month - 7];
+        } else 
+        {
+            taxaAtual = taxas.getSelicMensal()[month + 5];
+        }
+        
+        for (Poupanca_Extrato po : poupancaMovimento){
+            if (po.getStatus()){
+                Date niver = po.getAniversario();
+                localDate = niver.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int day = localDate.getDayOfYear();
+                localDate = dia.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int dayToday = localDate.getDayOfYear();
+                
+                if ((dayToday - day) % 30 == 0){
+                    po.setSaldo(po.getSaldo().add(po.getSaldo().multiply(taxaAtual.divide(new BigDecimal("100")))));
+                    BigDecimal lucro = po.getSaldo().multiply(taxaAtual.divide(new BigDecimal("100")));
+                    Poupanca a = po.getContapoupanca();
+                    a.setSaldo(a.getSaldo().add(lucro));
+                }
+            }
+        }
+        
+   }
 
     public void printSaldo() throws InterruptedException {
         System.out.println("O saldo da sua poupança é: R$" + this.getSaldo());

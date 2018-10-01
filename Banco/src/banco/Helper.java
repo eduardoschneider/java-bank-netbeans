@@ -73,7 +73,7 @@ public class Helper {
         return opcao;
     }
     
-    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<PoupancaDeposito> poupancaMovimento, List<Extrato> extratos){
+    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<Poupanca_Extrato> poupancaMovimento, List<Extrato> extratos){
         
         Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "46483321805", new Date());
         Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "46483321806", new Date());

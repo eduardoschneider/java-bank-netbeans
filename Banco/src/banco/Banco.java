@@ -47,7 +47,7 @@ public class Banco {
         List<Cliente> clientes = new ArrayList();
         List<Conta> contas = new ArrayList();
         List<Poupanca> poupancas = new ArrayList();
-        List<PoupancaDeposito> poupancaMovimento = new ArrayList();
+        List<Poupanca_Extrato> poupancaMovimento = new ArrayList();
         List<Extrato> extratos = new ArrayList();
         int contadorPoupancaDepositos = 0;
         help.populaParaTestes(clientes, contas, poupancas, poupancaMovimento, extratos);
@@ -106,7 +106,7 @@ public class Banco {
                             case 10:
                                 clearScreen();
                                 dataDeHoje = help.incrementaDia(dataDeHoje);
-                                System.out.println(dataDeHoje);
+                                Poupanca.verificaJuros(poupancas, poupancaMovimento, dataDeHoje);
                                 break;
                             case 11:
                                 clearScreen();

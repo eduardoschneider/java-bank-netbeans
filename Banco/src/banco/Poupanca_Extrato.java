@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author eduardo.schneider
  */
-public class PoupancaDeposito {
+public class Poupanca_Extrato {
     private int idPoupancaDeposito;
     private Poupanca contapoupanca;
     private BigDecimal saldo; //juros e retiradas movimentam o saldo, se saldo for 
@@ -21,7 +21,7 @@ public class PoupancaDeposito {
     private Date aniversario;
     private boolean status; //ativo ou inativo
 
-    public PoupancaDeposito(int idPoupancaDeposito, Poupanca contapoupanca, BigDecimal saldo, Date dataInicio, Date datatermino, Date aniversario, boolean status) {
+    public Poupanca_Extrato(int idPoupancaDeposito, Poupanca contapoupanca, BigDecimal saldo, Date dataInicio, Date datatermino, Date aniversario, boolean status) {
         this.idPoupancaDeposito = idPoupancaDeposito;
         this.contapoupanca = contapoupanca;
         this.saldo = saldo;
