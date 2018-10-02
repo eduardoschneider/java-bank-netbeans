@@ -5,7 +5,8 @@
  */
 package banco;
 
-import static banco.Banco.clearScreen;
+import static banco.Helper.clearScreen;
+import static banco.Helper.formataDecimal;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class Poupanca_Extrato {
     }
 
     public BigDecimal getSaldo() {
-        return saldo;
+        return formataDecimal(saldo);
     }
 
     public void setSaldo(BigDecimal saldo) {

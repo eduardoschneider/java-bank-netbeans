@@ -32,12 +32,13 @@ public class Helper {
         System.out.println("7- Alterar                 ████████████████");
         System.out.println("8- Pesquisar               ████████████████");
         System.out.println("█████████████████████████████████");
-        System.out.println("9- Cadastrar CDB           ████████████████");
         System.out.println("9- Cadastrar Fundo Invest. ████████████████");
-        System.out.println("11- Avançar o dia          ████████████████");
-        System.out.println("12- Registros Poupança     ████████████████");
-        System.out.println("13- Registros CDB          ████████████████");
-        System.out.println("14- Sair                   ████████████████");
+        System.out.println("10- Cadastrar CDB          ████████████████");
+        System.out.println("11- Cadastrar Poupança     ████████████████");
+        System.out.println("12- Avançar o dia          ████████████████");
+        System.out.println("13- Registros Poupança     ████████████████");
+        System.out.println("14- Registros CDB          ████████████████");
+        System.out.println("15- Sair                   ████████████████");
         System.out.println("█████████████████████████████████");
     }
 
@@ -48,10 +49,10 @@ public class Helper {
         System.out.println("2- Pagamento             ███████████████████");
         System.out.println("3- Extrato               ███████████████████");
         System.out.println("4- Saque                 ███████████████████");
-        System.out.println("5- Investir CDB          ███████████████████");
+        System.out.println("5- Transferência         ███████████████████");
         System.out.println("6- Saldo                 ███████████████████");
-        System.out.println("7- Investimento          ███████████████████");
-        System.out.println("8- Transferência         ███████████████████");
+        System.out.println("7- Fundo de Investimento ███████████████████");
+        System.out.println("8- Investir CDB          ███████████████████");
         System.out.println("9- Depositar Poupança    ███████████████████");
         System.out.println("10- Sacar Poupança       ███████████████████");
         System.out.println("11- Consultar Poupança   ███████████████████");
@@ -74,7 +75,9 @@ public class Helper {
         return opcao;
     }
     
-    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas, List<Poupanca> poupancas, List<Extrato> extratos, List<CDB> cdbs){
+    public void populaParaTestes(List<Cliente> clientes, List<Conta> contas,
+                                List<Poupanca> poupancas, List<Extrato> extratos,
+                                List<CDB> cdbs, List<Fundo> fundos){
         
         Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "46483321805", new Date());
         Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "46483321806", new Date());
@@ -139,17 +142,42 @@ public class Helper {
         cdbs.add(cdb60);
         cdbs.add(cdb90);
         cdbs.add(cdb120);
+        
+        Fundo fundo1 = new Fundo(0, "FUNDO EASFODA", new BigDecimal("0.0"));
+        Fundo fundo2 = new Fundo(1, "FUNDO ILOVEPOO", new BigDecimal("0.0"));
+        Fundo fundo3 = new Fundo(2, "FUNDO ADSMINHAVIDAEVOCE", new BigDecimal("0.0"));
+        
+        fundos.add(fundo1);
+        fundos.add(fundo2);
+        fundos.add(fundo3);
+               
     }
     
-    public Date incrementaDia(Date data){
-        System.out.println("Digite quantos dias quer avançar: (Um mês = 30)\n");
+    public int incrementaDia(Date data){
+        System.out.println("Digite o número de dias que deseja incrementar: ");
         Scanner leitor = new Scanner(System.in);
         int dia = Integer.parseInt(leitor.next());
+        
+        return dia;
+    } 
+    
+    public Date diaMaisMais(Date data){
         Calendar c = Calendar.getInstance(); 
         c.setTime(data); 
-        c.add(Calendar.DATE, dia);
+        c.add(Calendar.DATE, 1);
         data = c.getTime();
         
         return data;
+    }
+
+    public static BigDecimal formataDecimal(BigDecimal vlrFator){  
+        BigDecimal numFormatado  = vlrFator.setScale(2, BigDecimal.ROUND_UP); 
+        return numFormatado;		
+    }
+    
+    public static void clearScreen() {
+        for (int i = 0; i < 20; i++) {
+            System.out.println(" ");
+        }
     }
 }

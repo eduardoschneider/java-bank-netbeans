@@ -5,12 +5,9 @@
  */
 package banco;
 
-import static banco.Cliente.cadastrarCliente;
-import static banco.Conta.cadastrarConta;
+import static banco.Helper.clearScreen;
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,12 +30,6 @@ public class Banco {
         new Banco();
     }
 
-    public static void clearScreen() {
-        for (int i = 0; i < 20; i++) {
-            System.out.println(" ");
-        }
-    }
-
     private Banco() throws InterruptedException, ParseException {
         Date dataDeHoje = new Date();
         int idCliente = 5;
@@ -53,10 +44,13 @@ public class Banco {
         List<Poupanca_Extrato> poupancaMovimento = new ArrayList();
         List<CDB> cdbs = new ArrayList();
         List<CDB_Extrato> cdbMovimento = new ArrayList();
+        List<Fundo> fundos = new ArrayList();
+        List<Fundo_Extrato> fundoMovimento = new ArrayList();
         List<Extrato> extratos = new ArrayList();
         int contadorPoupancaDepositos = 0;
         int contadorCDBDepositos = 0;
-        help.populaParaTestes(clientes, contas, poupancas, extratos, cdbs);
+        int contadorFundoDepositos = 0;
+        help.populaParaTestes(clientes, contas, poupancas, extratos, cdbs, fundos);
         clearScreen();
 
         int opcao = 0;
@@ -67,7 +61,7 @@ public class Banco {
             switch (opcao) {
                 case 1:
                     clearScreen();
-                    while ((opcao != 14)) {
+                    while ((opcao != 16)) {
                         help.showAdminMenu();
                         opcao = leitor.nextInt();
                         switch (opcao) {
@@ -107,41 +101,40 @@ public class Banco {
                                 break;
                             case 9:
                                 clearScreen();
-                                //cadastrar invstimentos
+                                Fundo.cadastrarFundo(fundos, idCDB);
                                 break;
                             case 10:
                                 clearScreen();
                                 CDB.cadastrarCDB(cdbs, idCDB);
                                 idCDB++;
                               break;  
-                            case 11:
-                                clearScreen();
-                                Date dataAnterior = dataDeHoje;
-                                dataDeHoje = help.incrementaDia(dataDeHoje);
-                                
-                                LocalDate anterior = dataAnterior.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                                int dayAnterior = anterior.getDayOfYear();
-                                
-                                LocalDate depois = dataDeHoje.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                                int dayAfter = depois.getDayOfYear();
-                                
-                                int diferenca = (dayAfter - dayAnterior);
-                                
-                                for (int i = 0; i <= diferenca; i++){
-                                    Poupanca.verificaJuros(poupancas, poupancaMovimento, dataDeHoje);
-                                    CDB.verificaJuros(cdbs, contas, cdbMovimento, dataDeHoje);
-                                }
-                                break;
                             case 12:
+                                clearScreen();
+                                
+                                int quantos = help.incrementaDia(dataDeHoje);
+                                
+                                for (int i = 0; i <= quantos; i++){
+                                    dataDeHoje = help.diaMaisMais(dataDeHoje);
+                                    Poupanca.verificaJuros(poupancas, poupancaMovimento, dataDeHoje);
+                                    CDB.verificaJuros(cdbs, contas, cdbMovimento, dataDeHoje, extratos);
+                                    Fundo.verificaJuros(fundos, fundoMovimento, dataDeHoje);
+                                }
+                                
+                                break;
+                            case 13:
                                 clearScreen();
                                 if (poupancaAtual != null)
                                     Poupanca_Extrato.printaDepositos(poupancaMovimento);
                                 break;
-                            case 13:
+                            case 14:
                                 clearScreen();
                                 CDB_Extrato.printaDepositos(cdbMovimento);
                                 break;
-                            case 14:
+                            case 15:
+                                clearScreen();
+                                Fundo_Extrato.printaDepositos(fundoMovimento);
+                                break;
+                            case 16:
                                 break;
                             default:
                                 System.out.println("Digite uma opção válida.");
@@ -180,8 +173,7 @@ public class Banco {
                                     break;
                                 case 5:
                                     clearScreen();
-                                    CDB.investirCDB(contaAtual, cdbs, cdbMovimento, contadorCDBDepositos);
-                                    contadorCDBDepositos++;
+                                    contaAtual.transferir(contas, extratos);
                                     break;
                                 case 6:
                                     clearScreen();
@@ -189,11 +181,13 @@ public class Banco {
                                     break;
                                 case 7:
                                     clearScreen();
-                                    //Investimentos
+                                    Fundo.investir(fundos, fundoMovimento, contaAtual, contadorFundoDepositos, extratos);
+                                    
                                     break;
                                 case 8:
                                     clearScreen();
-                                    contaAtual.transferir(contas, extratos);
+                                    CDB.investirCDB(contaAtual, cdbs, cdbMovimento, contadorCDBDepositos, extratos);
+                                    contadorCDBDepositos++;
                                     break;
                                 case 9:
                                     clearScreen();

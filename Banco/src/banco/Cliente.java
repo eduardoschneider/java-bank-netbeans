@@ -5,7 +5,7 @@
  */
 package banco;
 
-import static banco.Banco.clearScreen;
+import static banco.Helper.clearScreen;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

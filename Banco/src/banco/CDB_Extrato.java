@@ -5,7 +5,8 @@
  */
 package banco;
 
-import static banco.Banco.clearScreen;
+import static banco.Helper.clearScreen;
+import static banco.Helper.formataDecimal;
 import static java.lang.System.in;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -59,7 +60,7 @@ public class CDB_Extrato {
     }
 
     public BigDecimal getSaldo() {
-        return saldo;
+        return formataDecimal(saldo);
     }
 
     public void setSaldo(BigDecimal saldo) {
@@ -82,7 +83,7 @@ public class CDB_Extrato {
         this.datatermino = datatermino;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

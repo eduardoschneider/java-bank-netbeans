@@ -5,7 +5,8 @@
  */
 package banco;
 
-import static banco.Banco.clearScreen;
+import static banco.Helper.clearScreen;
+import static banco.Helper.formataDecimal;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
@@ -50,7 +51,7 @@ public class Conta {
     }
 
     public BigDecimal getSaldo() {
-        return saldo;
+        return formataDecimal(saldo);
     }
 
     public void setSaldo(BigDecimal saldo) {
@@ -150,13 +151,15 @@ public class Conta {
         return null;
     }
 
-    public void retirarExtrato(List<Extrato> extratos) {
+    public void retirarExtrato(List<Extrato> extratos) throws InterruptedException {
         clearScreen();
         for (Extrato e : extratos) {
             if ((e.getConta()).equals(this)) {
-                System.out.println(e.getData() + " - " + e.getValorMexido() + " - " + (e.getConta().getCodigoConta()) + " - " + e.getTipoMovimento() + "\n");
+                System.out.println(e.getData() + " - VALOR (" + e.getValorMexido() + ") - CONTA: (" + (e.getConta().getCodigoConta()) + ") TIPO: " + (e.getTipoMovimento() ? "(+++)":"(---)") + "\n");
             }
         }
+        
+        Thread.sleep(1500);
     }
 
     public void transferir(List<Conta> contas, List<Extrato> extratos) {
