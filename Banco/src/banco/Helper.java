@@ -20,13 +20,14 @@ public class Helper {
     public void showAdminMenu() {
         System.out.println("█████████████████████████████████");
         System.out.println("Selecione uma das opções administrativas:███████");
-        System.out.println("████ CLIENTES           ████████████████");
+        System.out.println("█████████████████████████████████");
+        System.out.println("███ CLIENTES             ████████████████");
         System.out.println("1- Cadastrar               ████████████████");
         System.out.println("2- Excluir                 ████████████████");
         System.out.println("3- Alterar                 ████████████████");
         System.out.println("4- Pesquisar               ████████████████");
         System.out.println("█████████████████████████████████");
-        System.out.println("████ CONTAS             ████████████████");
+        System.out.println("███ CONTAS               ████████████████");
         System.out.println("5- Cadastrar               ████████████████");
         System.out.println("6- Excluir                 ████████████████");
         System.out.println("7- Alterar                 ████████████████");
@@ -35,10 +36,17 @@ public class Helper {
         System.out.println("9- Cadastrar Fundo Invest. ████████████████");
         System.out.println("10- Cadastrar CDB          ████████████████");
         System.out.println("11- Cadastrar Poupança     ████████████████");
-        System.out.println("12- Avançar o dia          ████████████████");
-        System.out.println("13- Registros Poupança     ████████████████");
-        System.out.println("14- Registros CDB          ████████████████");
-        System.out.println("15- Sair                   ████████████████");
+        System.out.println("█████████████████████████████████");
+        System.out.println("12- Avançar dias           ████████████████");
+        System.out.println("█████████████████████████████████");
+        System.out.println("13- Movimento Poupança     ████████████████");
+        System.out.println("14- Movimento CDB          ████████████████");
+        System.out.println("15- Movimento Fundo Invest.████████████████");
+        System.out.println("█████████████████████████████████");
+        System.out.println("16- Listar CDBS            ████████████████");
+        System.out.println("17- Listar Fundos          ████████████████");
+        System.out.println("█████████████████████████████████");
+        System.out.println("18- Sair                   ████████████████");
         System.out.println("█████████████████████████████████");
     }
 
@@ -51,23 +59,31 @@ public class Helper {
         System.out.println("4- Saque                 ███████████████████");
         System.out.println("5- Transferência         ███████████████████");
         System.out.println("6- Saldo                 ███████████████████");
+        System.out.println("██████████████████████████████████");
         System.out.println("7- Fundo de Investimento ███████████████████");
         System.out.println("8- Investir CDB          ███████████████████");
+        System.out.println("██████████████████████████████████");
         System.out.println("9- Depositar Poupança    ███████████████████");
         System.out.println("10- Sacar Poupança       ███████████████████");
         System.out.println("11- Consultar Poupança   ███████████████████");
+        System.out.println("██████████████████████████████████");
         System.out.println("12- Sair                 ███████████████████");
         System.out.println("███████████████████████████████████");
     }
 
     public int perguntaTipo() {
         System.out.println("███████████████████████████████████");
-        System.out.println("███████  BEM VINDO AO BANCO EM JAVA ☕ ████████");
-        System.out.println("██████████████❗█████████████████████");
+        System.out.println("███████   BEM VINDO AO BANCO EM JAVA ☕  ███████");
+        System.out.println("███████████████████████████████████");
         System.out.println("Digite o tipo de usuário que você gostaria de acessar:\n");
         System.out.println("1- Administrador");
-        System.out.println("2- Usuário Normal\n");
+        System.out.println("2- Usuário Normal");
+        System.out.println("3- ❗❗❗ READ ME ❗❗❗");
+        System.out.println("\n4- Sair\n");
         System.out.println("███████████████████████████████████");
+        System.out.println("█████████   BY: EDUARDO SCHNEIDER   █████████");
+        System.out.println("███████████████████████████████████");
+        System.out.println("█████                                      ██████");
 
         Scanner leitor = new Scanner(System.in);
         int opcao = leitor.nextInt();
@@ -75,17 +91,21 @@ public class Helper {
         return opcao;
     }
     
+    //////////////////////////////////////////////////////////////////////////////
+    //                          DADOS PRÉ CADASTRADOS                           //
+    //////////////////////////////////////////////////////////////////////////////
+    
     public void populaParaTestes(List<Cliente> clientes, List<Conta> contas,
                                 List<Poupanca> poupancas, List<Extrato> extratos,
                                 List<CDB> cdbs, List<Fundo> fundos){
         
-        Cliente cliente1 = new Cliente(0, "Eduardo Schneider111", "46483321805", new Date());
-        Cliente cliente2 = new Cliente(1, "Eduardo Schneider222", "46483321806", new Date());
-        Cliente cliente3 = new Cliente(2, "Eduardo Schneider333", "46483321807", new Date());
-        Cliente cliente4 = new Cliente(3, "Eduardo Schneider444", "46483321808", new Date());
-        Cliente cliente5 = new Cliente(4, "Eduardo Schneider555", "46483321809", new Date());
-        Cliente cliente6 = new Cliente(4, "Eduardo Schneider666", "46483321810", new Date());
-        Cliente cliente7 = new Cliente(4, "Eduardo Schneider777", "46483321811", new Date());
+        Cliente cliente1 = new Cliente(0, "Eduardo Schneider", "46483321805", new Date());
+        Cliente cliente2 = new Cliente(1, "Luis Almeida Pereira", "31438993013", new Date());
+        Cliente cliente3 = new Cliente(2, "Roberto Justus", "30308850033", new Date());
+        Cliente cliente4 = new Cliente(3, "Ciro Gomes", "34903167038", new Date());
+        Cliente cliente5 = new Cliente(4, "Jair Esfaquenaro", "37047849076", new Date());
+        Cliente cliente6 = new Cliente(5, "Cabo Daciolo", "78379730038", new Date());
+        Cliente cliente7 = new Cliente(6, "Maria das Graças", "92656680085", new Date());
         clientes.add(cliente1);
         clientes.add(cliente2);
         clientes.add(cliente3);
@@ -94,16 +114,20 @@ public class Helper {
         clientes.add(cliente6);
         clientes.add(cliente7);
         
-        Conta conta1 = new Conta("000-00", cliente1, new BigDecimal("500.0"));
-        Conta conta2 = new Conta("000-01", cliente2, new BigDecimal("200.0"));
-        Conta conta3 = new Conta("000-02", cliente3, new BigDecimal("300.0"));
-        Conta conta4 = new Conta("000-03", cliente4, new BigDecimal("400.0"));
-        Conta conta5 = new Conta("000-04", cliente5, new BigDecimal("100.0"));
+        Conta conta1 = new Conta("000-00", cliente1, new BigDecimal("1500.0"));
+        Conta conta2 = new Conta("000-01", cliente2, new BigDecimal("2200.0"));
+        Conta conta3 = new Conta("000-02", cliente3, new BigDecimal("6300.0"));
+        Conta conta4 = new Conta("000-03", cliente4, new BigDecimal("2400.0"));
+        Conta conta5 = new Conta("000-04", cliente5, new BigDecimal("11100.0"));
+        Conta conta6 = new Conta("000-05", cliente6, new BigDecimal("2400.0"));
+        Conta conta7 = new Conta("000-06", cliente7, new BigDecimal("11100.0"));
         contas.add(conta1);
         contas.add(conta2);
         contas.add(conta3);
         contas.add(conta4);
         contas.add(conta5);
+        contas.add(conta6);
+        contas.add(conta7);
 
         Poupanca poupanca1 = new Poupanca("0221", cliente1, new BigDecimal("0.0"));
         Poupanca poupanca5 = new Poupanca("4334", cliente5, new BigDecimal("0.0"));
@@ -121,22 +145,22 @@ public class Helper {
         c.add(Calendar.DATE, 30);
         vencimento = c.getTime();
         
-        CDB cdb30 = new CDB(0, "CDB do ADS", new BigDecimal("0.0"), vencimento);
+        CDB cdb30 = new CDB(0, "CDB do ADS", new BigDecimal("0.0"), vencimento, new BigDecimal("0.95"));
         
         c.add(Calendar.DATE, 30);
         vencimento = c.getTime();
         
-        CDB cdb60 = new CDB(1, "CDB da EC", new BigDecimal("0.0"), vencimento);
+        CDB cdb60 = new CDB(1, "CDB da EC", new BigDecimal("0.0"), vencimento, new BigDecimal("1.0"));
         
         c.add(Calendar.DATE, 30);
         vencimento = c.getTime();
         
-        CDB cdb90 = new CDB(2, "CDB do EM", new BigDecimal("0.0"), vencimento);
+        CDB cdb90 = new CDB(2, "CDB do EM", new BigDecimal("0.0"), vencimento, new BigDecimal("1.05"));
         
         c.add(Calendar.DATE, 30);
         vencimento = c.getTime();
         
-        CDB cdb120 = new CDB(3, "CDB do EAD", new BigDecimal("0.0"), vencimento);
+        CDB cdb120 = new CDB(3, "CDB do EAD", new BigDecimal("0.0"), vencimento, new BigDecimal("1.10"));
         
         cdbs.add(cdb30);
         cdbs.add(cdb60);
@@ -179,5 +203,18 @@ public class Helper {
         for (int i = 0; i < 20; i++) {
             System.out.println(" ");
         }
+    }
+
+    void showToTheUserTheInfoHeOrSheNeeds() throws InterruptedException {
+        clearScreen();
+        System.out.println("Ao logar, digite a conta incluindo o hífen, exemplo: '000-00'");
+        System.out.println("Todas as informações que você precisa, encontrará na classe Helper.");
+        System.out.println("Apenas duas poupanças estão cadastradas, a da conta 000-00 e 000-04");
+        System.out.println("Mas você pode cadastrar através do login de admin.");
+        System.out.println("Os cpfs não tem pontuações, digite direto, ex: 46483321805");
+        System.out.println("\nRetornando ao menu em 10 segundos...");
+        
+        Thread.sleep(13000);
+        
     }
 }

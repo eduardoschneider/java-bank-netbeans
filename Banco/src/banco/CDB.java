@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,12 +24,14 @@ public class CDB {
     private String nome;
     private BigDecimal saldo;
     private Date vencimento;
+    private BigDecimal porcentagemCDI;
 
-    public CDB(int id, String nome, BigDecimal saldo, Date data) {
+    public CDB(int id, String nome, BigDecimal saldo, Date data, BigDecimal porcentagemCDI) {
         this.id = id;
         this.nome = nome;
         this.saldo = saldo;
         this.vencimento = data;
+        this.porcentagemCDI = porcentagemCDI;
     }
 
     public int getId() {
@@ -65,23 +66,42 @@ public class CDB {
         this.vencimento = vencimento;
     }
 
-    public static void cadastrarCDB(List<CDB> cdbs, int idAtual) {
+    public BigDecimal getPorcentagemCDI() {
+        return porcentagemCDI;
+    }
+
+    public void setPorcentagemCDI(BigDecimal porcentagemCDI) {
+        this.porcentagemCDI = porcentagemCDI;
+    }
+    
+    
+
+    public static void cadastrarCDB(List<CDB> cdbs, int idAtual) throws InterruptedException {
 
         System.out.println("Digite o nome do CDB:");
         Scanner leitor = new Scanner(System.in);
-        String nome = leitor.next();
+        String nome = leitor.nextLine();
 
         System.out.println("Digite o prazo do CDB:");
         int vencimento = Integer.parseInt(leitor.next());
-
+        
         Date venciment = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(venciment);
-        c.add(Calendar.DATE, 30);
+        c.add(Calendar.DATE, vencimento);
         venciment = c.getTime();
-
-        CDB cdb = new CDB(idAtual, nome, new BigDecimal("0.0"), venciment);
+        
+        System.out.println(venciment);
+        
+        System.out.println("Digite a % do CDI: (Exemplo: 95)");
+        BigDecimal porcentagem = new BigDecimal(leitor.next());
+        
+        CDB cdb = new CDB(idAtual, nome, new BigDecimal("0.0"), venciment, porcentagem);
+        
         cdbs.add(cdb);
+        
+        System.out.println("CDB cadastrado com sucesso.");
+        Thread.sleep(1500);
     }
 
     public static void investirCDB(Conta contaAtual, List<CDB> cdbs, List<CDB_Extrato> cdbMovimento, int idDeposito, List<Extrato> extratos) throws InterruptedException {
@@ -155,12 +175,14 @@ public class CDB {
                                     conta.setSaldo(conta.getSaldo().add(movimento.getSaldo()));
                                 }
                             }
+                            
                             movimento.setSaldo(new BigDecimal("0.0"));
                             movimento.getCdb().setNome("VENCIDO(" + movimento.getCdb().getNome() + ")");
                             movimento.setStatus(false);
                         }
                     }
                 }
+                cdb.setSaldo(new BigDecimal("0.0"));
             }
         }
     }

@@ -86,18 +86,20 @@ public class Cliente {
         return cliente;
     }
     
-    public static void excluirCliente(List<Cliente> clientes, List<Conta> contas){
+    public static void excluirCliente(List<Cliente> clientes, List<Conta> contas) throws InterruptedException{
         System.out.println("Digite o CPF do cliente que deseja excluir:\n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
         boolean achouCliente = false;
         boolean achouConta = false;
         for (Cliente c : clientes){
-            System.out.println(c.getCpfCliente());
             if ((c.getCpfCliente()).equals(cpf)){
                 achouCliente = true;
                 for (Conta co : contas){
                     if (((co.getCliente().getCpfCliente())).equals(cpf)){
+                        System.out.println("NOME:" + co.getCliente().getNomeCliente());
+                        System.out.println("CPF:" + co.getCliente().getCpfCliente());
+                        
                         achouConta = true;
                     }
                 }
@@ -122,8 +124,11 @@ public class Cliente {
                     }
                 }
             }
+            else {
+                System.out.println("Você não pode excluir um cliente sem excluir a conta também.");
+            }            
         } else if (achouCliente && !achouConta){
-            System.out.println("Cliente encontrado, deseja excluir? (S/N)");
+            System.out.println("Cliente encontrado, e não possui conta, deseja excluir? (S/N)");
             String resposta = leitor.next();
             
             if((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))){
@@ -135,6 +140,8 @@ public class Cliente {
                 }
             }
         }
+        
+        Thread.sleep(1500);
     }
     
     public static void pesquisarCliente(List<Cliente> clientes) throws InterruptedException, ParseException {
@@ -148,14 +155,13 @@ public class Cliente {
                 System.out.println("ID: " + c.getIdCliente() + " - - NOME: " + c.getNomeCliente());
                 System.out.println("CPF: " + c.getCpfCliente() + " - - DATA DE NASCIMENTO: " + c.getDataNasc());
                 System.out.println("\n Retornando ao menu em 3 segundos...");
-                Thread.sleep(4000);
                 achou = true;
             }
         }
-        if (!achou){
+        if (!achou)
             System.out.println("Cliente não encontrado :(");
-            Thread.sleep(2000);
-        }
+        
+        Thread.sleep(2000);
     }
     
     public static Cliente alterarCliente(List<Cliente> clientes) throws InterruptedException, ParseException{
@@ -165,26 +171,39 @@ public class Cliente {
         String cpf = leitor.next();
         clearScreen();
         Cliente cliente = null;
-        boolean achouCliente = false;
         for (Cliente co : clientes) {
             if (((co.getCpfCliente())).equals(cpf)) {
                 cliente = co;
-                achouCliente = true;
             }
         }
 
-        if (achouCliente) {
+        if (cliente != null) {
             System.out.println("CPF: " + cpf);
             System.out.println((cliente.getNomeCliente()));
-            System.out.println((cliente.getDataNascString()));
-            
-            Thread.sleep(2500);
+            System.out.println((cliente.getDataNascString() + "\n"));
+            System.out.println("Alterar CPF? (s/n)");
+            String resposta = leitor.next();
+             if((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))){
+                 System.out.println("Digite o novo CPF:");
+                 String newCPF = leitor.next();
+                 cliente.setCpfCliente(newCPF);
+             }
+            clearScreen();
+            System.out.println("Alterar Nome? (s/n)");
+            resposta = leitor.next();
+            if((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))){
+                System.out.println("Digite o novo nome:");
+                String newNome = leitor.nextLine();
+                cliente.setNomeCliente(newNome);
+                 
+             }
+             System.out.println("Operação finalizada com sucesso.");
         } 
         else 
         {
             System.out.println("Cliente não encontrado.");
         }
-        
+        Thread.sleep(2500);
         return new Cliente();
     }
 }

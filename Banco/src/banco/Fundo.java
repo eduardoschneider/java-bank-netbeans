@@ -57,8 +57,8 @@ public class Fundo {
 
         System.out.println("Digite o nome do Fundo de Investimento:");
         Scanner leitor = new Scanner(System.in);
-        String nome = leitor.next();
-
+        String nome = leitor.nextLine();
+        
         Fundo fundo = new Fundo(idAtual, nome, new BigDecimal("0.0"));
         fundos.add(fundo);
     }

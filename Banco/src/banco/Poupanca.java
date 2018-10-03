@@ -168,11 +168,16 @@ public class Poupanca {
         
         Taxas taxas = new Taxas();
         BigDecimal taxaAtual;
+        
         if (month >= 7){
             taxaAtual = taxas.getSelicMensal()[month - 7];
+            if ((taxas.getSelicAnual()[month - 7]).compareTo(new BigDecimal("8.5")) < 0)
+                taxaAtual = taxas.getSelicMensal()[month - 7].multiply(new BigDecimal("0.7"));
         } else 
         {
             taxaAtual = taxas.getSelicMensal()[month + 5];
+            if ((taxas.getSelicAnual()[month + 5]).compareTo(new BigDecimal("8.5")) < 0)
+                taxaAtual = taxas.getSelicMensal()[month + 5].multiply(new BigDecimal("0.7"));
         }
         
         for (Poupanca_Extrato po : poupancaMovimento){
