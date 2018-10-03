@@ -62,7 +62,7 @@ public class Cliente {
     }
     
     public String getDataNascString() throws ParseException {
-        DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy");
         String str = targetFormat.format(dataNasc);
         
         return str;
@@ -72,7 +72,7 @@ public class Cliente {
         this.dataNasc = dataNasc;
     }
     
-    public static Cliente cadastrarCliente(int idCliente) {
+    public static Cliente cadastrarCliente(int idCliente) throws ParseException {
         System.out.println("Digite o nome do cliente\n");
         Scanner leitor = new Scanner(System.in);
         String nome = leitor.nextLine();
@@ -80,7 +80,11 @@ public class Cliente {
         System.out.println("Digite o CPF do cliente\n");
         String cpf = leitor.next();
 
-        Cliente cliente = new Cliente(idCliente, nome, cpf, new Date());
+        System.out.println("Digite a Data de Nascimento (ex: 12/04/97) \n");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = format.parse(leitor.next());
+        
+        Cliente cliente = new Cliente(idCliente, nome, cpf, data);
         clearScreen();
 
         return cliente;
@@ -152,8 +156,8 @@ public class Cliente {
         for (Cliente c : clientes){
             if((c.getCpfCliente()).equals(cpf)){
                 clearScreen();
-                System.out.println("ID: " + c.getIdCliente() + " - - NOME: " + c.getNomeCliente());
-                System.out.println("CPF: " + c.getCpfCliente() + " - - DATA DE NASCIMENTO: " + c.getDataNasc());
+                System.out.println(" - ID: " + c.getIdCliente() + "\n - NOME: " + c.getNomeCliente());
+                System.out.println(" - CPF: " + c.getCpfCliente() + "\n - DATA DE NASCIMENTO: " + c.getDataNascString());
                 System.out.println("\n Retornando ao menu em 3 segundos...");
                 achou = true;
             }

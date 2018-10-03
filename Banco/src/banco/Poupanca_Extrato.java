@@ -93,10 +93,10 @@ public class Poupanca_Extrato {
     public static void printaDepositos(List<Poupanca_Extrato> poupancaMovimento) throws InterruptedException {
     clearScreen();
     for (Poupanca_Extrato pd : poupancaMovimento) {
-
+        
         System.out.println("ID: " + pd.getIdPoupancaDeposito());
         System.out.println("SALDO: " + pd.getSaldo());
-        System.out.println("CREDOR: " + pd.getContapoupanca().getCliente().getCpfCliente());
+        System.out.println("DEPÓSITO PARA: " + pd.getContapoupanca().getCliente().getCpfCliente());
         System.out.println("------------------------------------------------");
     }
     Thread.sleep(1500);

@@ -105,7 +105,7 @@ public class Conta {
     }
 
     public static void cadastrarConta(List<Cliente> todos, List<Conta> todas, int idConta) throws InterruptedException {
-        System.out.println("Digite o CPF: \n");
+        System.out.println("Digite o CPF do Cliente: \n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
 
@@ -128,17 +128,19 @@ public class Conta {
                 conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
                 todas.add(conta);
                 idConta++;
-                System.out.println("Cadastrado com sucesso.");
+                System.out.println("Conta cadastrada com sucesso.");
+                
+                
             } else {
-                System.out.println("Cliente já possui conta!.");
+                System.out.println("Cliente já possui conta!");
             }
         } else {
             System.out.println("Cliente não encontrado.");
         }
-        Thread.sleep(1000);
+        Thread.sleep(1500);
     }
 
-    public static Conta perguntaUsuario(List<Conta> todas) {
+    public static Conta perguntaUsuario(List<Conta> todas) throws InterruptedException {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
@@ -148,6 +150,8 @@ public class Conta {
                 return cadaConta;
             }
         }
+        System.out.println("Conta não existente, confira se digitou no padrão ('XXX-XX')");
+        Thread.sleep(1500);
         return null;
     }
 
@@ -194,30 +198,39 @@ public class Conta {
         }
     }
 
-    public void depositar(List<Conta> contas, List<Extrato> extratos) {
+    public void depositar(List<Conta> contas, List<Extrato> extratos) throws InterruptedException {
         clearScreen();
         System.out.println("\nDigite a conta que deseja depositar:\n");
         Scanner leitor = new Scanner(System.in);
         String contaProcurada = leitor.next();
-        
-        System.out.println("\nDigite o valor que gostaria de depositar:\n");
-        BigDecimal valor = new BigDecimal(leitor.next());
-        
-        if (valor.compareTo(new BigDecimal("0.0")) < 0)
-            System.out.println("É impossível realizar depósitos negativos!");
-        else 
-        {   
-            this.setSaldo(this.getSaldo().add(valor));
-            //Extrato extratoSaida = new Extrato(new Date(), valor, false, contaAtual);
-            Extrato extratoEntrada = new Extrato(new Date(), valor, true, this);
-            //extratos.add(extratoSaida);
-            extratos.add(extratoEntrada);
+        boolean achou = false;
+        for (Conta c : contas){
+            if (c.getCodigoConta().equals(contaProcurada))
+                achou = true;
         }
+        if (achou){
+            System.out.println("\nDigite o valor que gostaria de depositar:\n");
+            BigDecimal valor = new BigDecimal(leitor.next());
+
+            if (valor.compareTo(new BigDecimal("0.0")) < 0)
+                System.out.println("\nÉ impossível realizar depósitos negativos!");
+            else 
+            {   
+                this.setSaldo(this.getSaldo().add(valor));
+                Extrato extratoEntrada = new Extrato(new Date(), valor, true, this);
+                extratos.add(extratoEntrada);
+                System.out.println("\nDepósito realizado com sucesso!");
+            }
+        } else
+        {
+            System.out.println("\nConta não encontrada. Verifique se digitou o código correto.");
+        }
+        Thread.sleep(1500);
     }
         
     
 
-    public void pagarBoleto(List<Extrato> extratos) {
+    public void pagarBoleto(List<Extrato> extratos) throws InterruptedException {
         System.out.println("Digite o código do documento a ser pago:\n");
         Scanner leitor = new Scanner(System.in);
         String codigo = leitor.next();
@@ -226,13 +239,15 @@ public class Conta {
         BigDecimal valor = new BigDecimal(leitor.next());
 
         if ((this.saldo).compareTo(valor) < 0) {
-            System.out.println("Você não tem saldo suficiente para realizar o pagamento.");
+            System.out.println("\nVocê não tem saldo suficiente para realizar o pagamento.");
         } else {
             this.setSaldo((this.saldo).subtract(valor));
             Extrato saida = new Extrato(new Date(), valor, false, this);
             extratos.add(saida);
-            System.out.println("Pagamento realizado com sucesso.");
+            System.out.println("\nPagamento realizado com sucesso.");
         }
+        
+        Thread.sleep(1500);
     }
 
     public static void excluirConta(List<Conta> contas) {

@@ -7,6 +7,9 @@ package banco;
 
 import static banco.Helper.formataDecimal;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
@@ -61,6 +64,14 @@ public class CDB {
     public Date getVencimento() {
         return vencimento;
     }
+    
+    public String getVencimentoString() throws ParseException {
+        DateFormat targetFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String str = targetFormat.format(vencimento);
+        
+        return str;
+    }
+    
 
     public void setVencimento(Date vencimento) {
         this.vencimento = vencimento;

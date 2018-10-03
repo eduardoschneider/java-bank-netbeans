@@ -169,9 +169,9 @@ public class Banco {
                             case 16:
                                 clearScreen();
                                 for (CDB c : cdbs)
-                                    System.out.println(" CODIGO: " + c.getId() + "\n NOME: " + c.getNome() + "\n SALDO:" + c.getSaldo()
-                                    + " \n PORCEGENTAGEM CDI: " + c.getPorcentagemCDI().multiply(new BigDecimal("100"))
-                                    + "% \n VENCIMENTO: " + "\n" + c.getVencimento() + "\n \n");
+                                    System.out.println("CODIGO: " + c.getId() + "\nNOME: " + c.getNome() + "\nSALDO:" + c.getSaldo()
+                                    + " \nPORCEGENTAGEM CDI: " + c.getPorcentagemCDI().multiply(new BigDecimal("100"))
+                                    + "% \nVENCIMENTO: " + "\n" + c.getVencimentoString() + "\n \n");
                                 Thread.sleep(2000);
                                 break;
                                 
@@ -179,7 +179,7 @@ public class Banco {
                             case 17:
                                 clearScreen();
                                 for (Fundo c : fundos)
-                                    System.out.println(" CODIGO: " + c.getId() + "\n NOME: " + c.getNome() + "\n SALDO:" + c.getSaldo() + "\n");
+                                    System.out.println(" CODIGO: " + c.getId() + "\n NOME: " + c.getNome() + "\n SALDO: " + c.getSaldo() + "\n");
                                 Thread.sleep(2000);
                                 break;
                                 
