@@ -114,13 +114,13 @@ public class Helper {
         clientes.add(cliente6);
         clientes.add(cliente7);
         
-        Conta conta1 = new Conta("000-00", cliente1, new BigDecimal("1500.0"));
-        Conta conta2 = new Conta("000-01", cliente2, new BigDecimal("2200.0"));
-        Conta conta3 = new Conta("000-02", cliente3, new BigDecimal("6300.0"));
-        Conta conta4 = new Conta("000-03", cliente4, new BigDecimal("2400.0"));
-        Conta conta5 = new Conta("000-04", cliente5, new BigDecimal("11100.0"));
-        Conta conta6 = new Conta("000-05", cliente6, new BigDecimal("2400.0"));
-        Conta conta7 = new Conta("000-06", cliente7, new BigDecimal("11100.0"));
+        Conta conta1 = new Conta("000-00", cliente1, new BigDecimal("1500.0"), "12345");
+        Conta conta2 = new Conta("000-01", cliente2, new BigDecimal("2200.0"), "12345");
+        Conta conta3 = new Conta("000-02", cliente3, new BigDecimal("6300.0"), "12345");
+        Conta conta4 = new Conta("000-03", cliente4, new BigDecimal("2400.0"), "12345");
+        Conta conta5 = new Conta("000-04", cliente5, new BigDecimal("11100.0"), "12345");
+        Conta conta6 = new Conta("000-05", cliente6, new BigDecimal("2400.0"), "12345");
+        Conta conta7 = new Conta("000-06", cliente7, new BigDecimal("11100.0"), "12345");
         contas.add(conta1);
         contas.add(conta2);
         contas.add(conta3);
@@ -203,6 +203,7 @@ public class Helper {
     void showToTheUserTheInfoHeOrSheNeeds() throws InterruptedException {
         clearScreen();
         System.out.println("Ao logar, digite a conta incluindo o hífen, exemplo: '000-00'");
+        System.out.println("A senha padrão das contas é 12345");
         System.out.println("Todas as informações que você precisa, encontrará na classe Helper.");
         System.out.println("Apenas duas poupanças estão cadastradas, a da conta 000-00 e 000-04");
         System.out.println("Mas você pode cadastrar através do login de admin.");

@@ -24,11 +24,13 @@ public class Conta {
     private String codigoConta;
     private Cliente cliente;
     private BigDecimal saldo;
+    private String senha;
 
-    public Conta(String codigoConta, Cliente cliente, BigDecimal saldo) {
+    public Conta(String codigoConta, Cliente cliente, BigDecimal saldo, String senha) {
         this.codigoConta = codigoConta;
         this.cliente = cliente;
         this.saldo = saldo;
+        this.senha = senha;
     }
 
     public Conta() {
@@ -57,6 +59,16 @@ public class Conta {
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+    
+    
 
     @Override
     public int hashCode() {
@@ -125,10 +137,13 @@ public class Conta {
                 }
             }
             if (!temConta) {
-                conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"));
+                System.out.println("Digite uma senha para a nova conta: ");
+                String senha = leitor.nextLine();
+                conta = new Conta("000-0" + idConta, atual, new BigDecimal("0.0"), senha);
                 todas.add(conta);
                 idConta++;
                 System.out.println("Conta cadastrada com sucesso.");
+                System.out.println("O código é: " + conta.getCodigoConta());
                 
                 
             } else {
@@ -144,13 +159,18 @@ public class Conta {
         System.out.println("Digite sua conta\n");
         Scanner leitor = new Scanner(System.in);
         String conta = leitor.next();
+        
+        System.out.println("Digite sua senha:");
+        String senha = leitor.next();
+        
         clearScreen();
         for (Conta cadaConta : todas) {
             if (cadaConta.getCodigoConta().equals(conta)) {
+                if (cadaConta.getSenha().equals(senha))
                 return cadaConta;
             }
         }
-        System.out.println("Conta não existente, confira se digitou no padrão ('XXX-XX')");
+        System.out.println("Código ou senha inválidos.");
         Thread.sleep(1500);
         return null;
     }
@@ -294,18 +314,50 @@ public class Conta {
         }
 
         if (achouConta) {
-            System.out.println("Digite o novo código da conta:");
+            System.out.println("Deseja alterar o código? ");
             String resposta = leitor.next();
+            if ((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))) {
+            
+                System.out.println("Digite o novo código da conta:");
+                resposta = leitor.next();
 
-            for (Iterator<Conta> iter = contas.listIterator(); iter.hasNext();) {
-                Conta a = iter.next();
-                if (((a.getCliente().getCpfCliente())).equals(cpf)) {
-                    a.setCodigoConta(resposta);
+                for (Iterator<Conta> iter = contas.listIterator(); iter.hasNext();) {
+                    Conta a = iter.next();
+                    if (((a.getCliente().getCpfCliente())).equals(cpf)) {
+                        a.setCodigoConta(resposta);
+                    }
                 }
-            }
-            System.out.println("Conta alterada com sucesso.");
-            Thread.sleep(1000);
-        } 
+                
+                System.out.println("Conta alterada com sucesso.");
+                Thread.sleep(1000);
+            } 
+            System.out.println("Deseja alterar a senha? ");
+            resposta = leitor.next();
+            
+            if ((resposta.equals("s")) || (resposta.equals("S")) || (resposta.equals("sim")) || (resposta.equals("SIM"))) {
+            
+                System.out.println("Digite a senha anterior:");
+                String anterior = leitor.next();
+                
+                System.out.println("Digite a nova senha:");
+                resposta = leitor.next();
+                boolean alterou = false;
+                
+                for (Iterator<Conta> iter = contas.listIterator(); iter.hasNext();) {
+                    Conta a = iter.next();
+                    if ((a.getSenha().equals(anterior)) && ((a.getCliente().getCpfCliente())).equals(cpf)) {
+                        a.setSenha(resposta);
+                        alterou = true;
+                        System.out.println("Conta alterada com sucesso.");
+                    }
+                }
+                
+                if (!alterou){
+                    System.out.println("Senha anterior incompatível.");
+                }
+                Thread.sleep(1000);
+            } 
+        }
         else 
         {
             System.out.println("Conta não encontrada.");
