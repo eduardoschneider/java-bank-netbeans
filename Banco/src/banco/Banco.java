@@ -53,7 +53,7 @@ public class Banco {
         int contadorFundoDepositos = 0;
         
         ///////////////////////////FUNÇÃO COM OS DADOS//////////////////////////////
-        help.populaParaTestes(clientes, contas, poupancas, extratos, cdbs, fundos);
+        help.populaParaTestes(clientes, contas, poupancas, cdbs, fundos);
         ///////////////////////////////////////////////////////////////////////////
         
         int opcao = 0;

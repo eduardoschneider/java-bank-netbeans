@@ -102,12 +102,10 @@ public class CDB {
         c.add(Calendar.DATE, vencimento);
         venciment = c.getTime();
         
-        System.out.println(venciment);
-        
-        System.out.println("Digite a % do CDI: (Exemplo: 95)");
+        System.out.println("Digite a % do CDI de juros que serão aplicados: (Exemplo: 95)");
         BigDecimal porcentagem = new BigDecimal(leitor.next());
         
-        CDB cdb = new CDB(idAtual, nome, new BigDecimal("0.0"), venciment, porcentagem);
+        CDB cdb = new CDB(idAtual, nome, new BigDecimal("0.0"), venciment, porcentagem.divide(new BigDecimal("100")));
         
         cdbs.add(cdb);
         

@@ -96,7 +96,7 @@ public class Helper {
     //////////////////////////////////////////////////////////////////////////////
     
     public void populaParaTestes(List<Cliente> clientes, List<Conta> contas,
-                                List<Poupanca> poupancas, List<Extrato> extratos,
+                                List<Poupanca> poupancas,
                                 List<CDB> cdbs, List<Fundo> fundos){
         
         Cliente cliente1 = new Cliente(0, "Eduardo Schneider", "46483321805", new Date());
@@ -134,11 +134,6 @@ public class Helper {
         poupancas.add(poupanca1);
         poupancas.add(poupanca5);
 
-        Extrato extratoSaida = new Extrato(new Date(), new BigDecimal("150.0"), false, conta1);
-        extratos.add(extratoSaida);
-        extratoSaida = new Extrato(new Date(), new BigDecimal("350.0"), false, conta1);
-        extratos.add(extratoSaida);
-        
         Date vencimento = new Date();
         Calendar c = Calendar.getInstance(); 
         c.setTime(vencimento); 
@@ -167,9 +162,9 @@ public class Helper {
         cdbs.add(cdb90);
         cdbs.add(cdb120);
         
-        Fundo fundo1 = new Fundo(0, "FUNDO EASFODA", new BigDecimal("0.0"));
-        Fundo fundo2 = new Fundo(1, "FUNDO ILOVEPOO", new BigDecimal("0.0"));
-        Fundo fundo3 = new Fundo(2, "FUNDO ADSMINHAVIDAEVOCE", new BigDecimal("0.0"));
+        Fundo fundo1 = new Fundo(0, "FUNDO EASFODA", new BigDecimal("0.0"), new BigDecimal("0.99"));
+        Fundo fundo2 = new Fundo(1, "FUNDO ILOVEPOO", new BigDecimal("0.0"), new BigDecimal("0.98"));
+        Fundo fundo3 = new Fundo(2, "FUNDO ADSMINHAVIDAEVOCE", new BigDecimal("0.0"), new BigDecimal("0.97"));
         
         fundos.add(fundo1);
         fundos.add(fundo2);

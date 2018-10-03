@@ -250,7 +250,7 @@ public class Conta {
         Thread.sleep(1500);
     }
 
-    public static void excluirConta(List<Conta> contas) {
+    public static void excluirConta(List<Conta> contas) throws InterruptedException {
         System.out.println("Digite o CPF do dono da conta que deseja excluir:\n");
         Scanner leitor = new Scanner(System.in);
         String cpf = leitor.next();
@@ -274,9 +274,11 @@ public class Conta {
                     }
                 }
             }
+            System.out.println("Conta excluida com sucesso!");
         } else {
             System.out.println("Conta não encontrada.");
         }
+        Thread.sleep(1500);
     }
 
     public static void alterarConta(List<Conta> contas) throws InterruptedException {

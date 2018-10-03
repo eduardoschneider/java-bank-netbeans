@@ -127,6 +127,7 @@ public class Cliente {
                         iter.remove();
                     }
                 }
+                System.out.println("Cliente e Contas excluídos com sucesso!");
             }
             else {
                 System.out.println("Você não pode excluir um cliente sem excluir a conta também.");
